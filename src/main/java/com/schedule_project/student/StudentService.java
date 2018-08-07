@@ -13,9 +13,7 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     public List<Student> getAllStudents() {
-        List<Student> students = new ArrayList<>();
-        students.addAll(studentRepository.findAll());
-        return students;
+        return studentRepository.findAll();
     }
 
     public Student getStudent(Integer studentId) throws Exception {

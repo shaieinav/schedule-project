@@ -15,27 +15,28 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @RequestMapping("/courses")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/courses")
     public List<Course> getAllCourses() {
         return courseService.getAllCourses();
     }
 
-    @RequestMapping("/courses/{courseNum}")
+    @GetMapping("/courses/{courseNum}")
     public Course getCourse(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourse(courseNum);
     }
 
-    @RequestMapping(method= RequestMethod.POST, value="/courses")
+    @PostMapping("/courses")
     public void addCourse(@RequestBody Course course) {
         courseService.addCourse(course);
     }
 
-    @RequestMapping(method= RequestMethod.PUT, value="/courses/{courseNum}")
+    @PutMapping("/courses/{courseNum}")
     public void updateCourse(@RequestBody Course course, @PathVariable Integer courseNum) {
         courseService.updateCourse(courseNum, course);
     }
 
-    @RequestMapping(method= RequestMethod.DELETE, value="/courses/{courseNum}")
+    @DeleteMapping("/courses/{courseNum}")
     public void deleteCourse(@PathVariable Integer courseNum) {
         courseService.deleteCourse(courseNum);
     }

@@ -15,9 +15,7 @@ public class StudiesService {
     private StudiesRepository studiesRepository;
 
     public List<Studies> getAllStudies() {
-        List<Studies> studies = new ArrayList<>();
-        studies.addAll(studiesRepository.findAll());
-        return studies;
+        return studiesRepository.findAll();
     }
 
 //    public Studies getStudies(Studies.StudiesId studiesId) throws Exception {

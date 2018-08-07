@@ -15,27 +15,27 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @RequestMapping("/students")
+    @GetMapping("/students")
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @RequestMapping("/students/{studentId}")
+    @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable Integer studentId) throws Exception {
         return studentService.getStudent(studentId);
     }
 
-    @RequestMapping(method= RequestMethod.POST, value="/students")
+    @PostMapping("/students")
     public void addStudent(@RequestBody Student student) {
         studentService.addStudent(student);
     }
 
-    @RequestMapping(method= RequestMethod.PUT, value="/students/{studentId}")
+    @PostMapping("/students/{studentId}")
     public void updateStudent(@RequestBody Student student, @PathVariable Integer studentId) {
         studentService.updateStudent(studentId, student);
     }
 
-    @RequestMapping(method= RequestMethod.DELETE, value="/students/{studentId}")
+    @DeleteMapping("/students/{studentId}")
     public void deleteStudent(@PathVariable Integer studentId) {
         studentService.deleteStudent(studentId);
     }

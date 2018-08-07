@@ -13,9 +13,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public List<Course> getAllCourses() {
-        List<Course> courses = new ArrayList<>();
-        courses.addAll(courseRepository.findAll());
-        return courses;
+        return courseRepository.findAll();
     }
 
     public Course getCourse(Integer courseNum) throws Exception {

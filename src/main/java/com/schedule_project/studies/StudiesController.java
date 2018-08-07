@@ -17,7 +17,7 @@ public class StudiesController {
         this.studiesService = studiesService;
     }
 
-    @RequestMapping("/studies")
+    @GetMapping("/studies")
     public List<Studies> getAllStudies() {
         return studiesService.getAllStudies();
     }
@@ -26,17 +26,17 @@ public class StudiesController {
 //    public Studies getStudies(@PathVariable Studies.StudiesId studiesId) throws Exception {
 //        return studiesService.getStudies(studiesId);
 //    }
-    @RequestMapping("/studies/{courseNum}/{studentId}")
+    @GetMapping("/studies/{courseNum}/{studentId}")
     public Studies getStudies(@PathVariable Course courseNum, @PathVariable Student studentId) throws Exception {
         return studiesService.getStudies(courseNum, studentId);
     }
 
-    @RequestMapping(method= RequestMethod.POST, value="/studies")
+    @PostMapping("/studies")
     public void addStudies(@RequestBody Studies studies) {
         studiesService.addStudies(studies);
     }
 
-    @RequestMapping(method= RequestMethod.PUT, value="/studies/{studiesId}")
+    @PutMapping("/studies/{studiesId}")
     public void updateStudies(@RequestBody Studies studies, @PathVariable Studies.StudiesId studiesId) {
         studiesService.updateStudies(studiesId, studies);
     }
