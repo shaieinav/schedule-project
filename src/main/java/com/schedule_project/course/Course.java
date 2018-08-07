@@ -3,6 +3,7 @@ package com.schedule_project.course;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schedule_project.student.Student;
 import com.schedule_project.studies.Studies;
+import com.schedule_project.teaches.Teaches;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -26,8 +27,12 @@ public class Course {
     private Integer courseCredit;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "courseJson")
+    @JsonManagedReference(value = "courseJson1")
     private List<Studies> studentsCourses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "courseJson2")
+    private List<Teaches> instructorsCourses = new ArrayList<>();
 
     public Course() {
 
@@ -94,7 +99,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "Instructor{" +
                 "courseNum=" + courseNum +
                 ", courseName='" + courseName + '\'' +
                 ", courseCredit=" + courseCredit +

@@ -84,13 +84,13 @@ public class Student {
         this.studentsCourses = studentsCourses;
     }
 
-//    public void addCourse(Course course, String studyDay, Time studyTime) {
+//    public void addCourse(Instructor course, String studyDay, Time studyTime) {
 //        Studies studies = new Studies(course, this, studyDay, studyTime);
 //        courses.add(studies);
 //        course.getStudents().add(studies);
 //    }
 //
-//    public void removeCourse(Course course) {
+//    public void removeCourse(Instructor course) {
 //        for (Iterator<Studies> iterator = courses.iterator(); iterator.hasNext(); ) {
 //
 //            Studies studies = iterator.next();

@@ -26,9 +26,15 @@ public class StudiesController {
 //    public Studies getStudies(@PathVariable Studies.StudiesId studiesId) throws Exception {
 //        return studiesService.getStudies(studiesId);
 //    }
-    @GetMapping("/studies/{courseNum}/{studentId}")
-    public Studies getStudies(@PathVariable Course courseNum, @PathVariable Student studentId) throws Exception {
-        return studiesService.getStudies(courseNum, studentId);
+//
+//    @GetMapping("/studies/{courseNum}/{studentId}")
+//    public Studies getStudies(@PathVariable Instructor courseNum, @PathVariable Student studentId) throws Exception {
+//        return studiesService.getStudies(courseNum, studentId);
+//    }
+
+    @GetMapping("/studies/{studiesId}")
+    public Studies getStudies(@PathVariable Studies.StudiesId studiesId) throws Exception {
+        return studiesService.getStudies(studiesId);
     }
 
     @PostMapping("/studies")
@@ -40,5 +46,4 @@ public class StudiesController {
     public void updateStudies(@RequestBody Studies studies, @PathVariable Studies.StudiesId studiesId) {
         studiesService.updateStudies(studiesId, studies);
     }
-
 }

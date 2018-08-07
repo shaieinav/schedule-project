@@ -21,8 +21,13 @@ public class StudiesService {
 //    public Studies getStudies(Studies.StudiesId studiesId) throws Exception {
 //        return studiesRepository.findById(studiesId).orElseThrow(() -> new Exception("Can't find studies id"));
 //    }
-    public Studies getStudies(Course courseNum, Student studentId) throws Exception {
-        return getAllStudies().stream().filter(t -> t.getCourse().equals(courseNum) && t.getStudent().equals(studentId)).findFirst().get();
+//
+//    public Studies getStudies(Instructor courseNum, Student studentId) throws Exception {
+//        return getAllStudies().stream().filter(t -> t.getCourse().equals(courseNum) && t.getStudent().equals(studentId)).findFirst().get();
+//    }
+
+    public Studies getStudies(Studies.StudiesId studiesId) throws Exception {
+        return studiesRepository.findById(studiesId).orElseThrow(() -> new Exception("Can't find studies id"));
     }
 
     public void addStudies(Studies studies) {

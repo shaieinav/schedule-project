@@ -61,7 +61,7 @@ public class Studies implements Serializable {
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "courseJson")
+    @JsonBackReference(value = "courseJson1")
 //    @MapsId("studies_course_num")
     @JoinColumn(name = "studies_course_num", insertable = false, updatable = false)
     private Course course;
@@ -110,7 +110,7 @@ public class Studies implements Serializable {
         return course.getCourseNum();
     }
 
-//    public Course getCourseObj() {
+//    public Instructor getCourseObj() {
 //        return course;
 //    }
 
