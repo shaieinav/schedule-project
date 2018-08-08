@@ -17,11 +17,14 @@ public class InstructorService {
     }
 
     public Instructor getInstructor(Integer instructorId) throws Exception {
-        return instructorRepository.findById(instructorId).orElseThrow(() -> new Exception("Can't find instructor id"));
+        return instructorRepository.findById(instructorId)
+                                   .orElseThrow(() -> new Exception("Can't find instructor id"));
     }
 
     public List<Teaches> getInstructorCourses(Integer instructorId) throws Exception {
-        return instructorRepository.findById(instructorId).orElseThrow(() -> new Exception("Can't find instructor id")).getInstructorsCourses();
+        return instructorRepository.findById(instructorId)
+                                   .orElseThrow(() -> new Exception("Can't find instructor id"))
+                                   .getInstructorsCourses();
     }
 
     public void addInstructor(Instructor instructor) {

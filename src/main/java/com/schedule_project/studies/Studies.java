@@ -11,51 +11,14 @@ import lombok.*;
 
 @Entity
 @Table(name = "studies")
-//@Getter @Setter @Data
 @EqualsAndHashCode
 public class Studies implements Serializable {
-
-    @Embeddable
-    /* @NoArgsConstructor */ @EqualsAndHashCode
-    public static class StudiesId implements Serializable {
-
-        @Column(name = "studies_student_id")
-        protected Integer studentId;
-
-        @Column(name = "studies_course_num")
-        protected Integer courseNum;
-
-        public StudiesId() {
-
-        }
-
-        public StudiesId(Integer studentId, Integer courseNum) {
-            this.studentId = studentId;
-            this.courseNum = courseNum;
-        }
-
-        public Integer getStudentId() {
-            return studentId;
-        }
-
-        public Integer getCourseNum() {
-            return courseNum;
-        }
-
-        public void setStudentId(Integer studentId) {
-            this.studentId = studentId;
-        }
-
-        public void setCourseNum(Integer courseNum) {
-            this.courseNum = courseNum;
-        }
-    }
 
     @EmbeddedId
     private StudiesId studiesId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "studentJson")
+    @JsonBackReference(value = "studentJson1")
 //    @MapsId("studies_student_id")
     @JoinColumn(name = "studies_student_id", insertable = false, updatable = false)
     private Student student;
@@ -97,7 +60,7 @@ public class Studies implements Serializable {
         return student.getStudentId();
     }
 
-//    public Student getStudentObj() {
+//    public Semester getStudentObj() {
 //        return student;
 //    }
 
@@ -136,7 +99,7 @@ public class Studies implements Serializable {
 
     @Override
     public String toString() {
-        return "Studies{" +
+        return "Enrolled{" +
                 "studiesId={" +
                 ", student=" + student.getStudentId() +
                 ", course=" + course.getCourseNum() +

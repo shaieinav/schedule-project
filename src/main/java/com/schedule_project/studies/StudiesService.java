@@ -18,23 +18,28 @@ public class StudiesService {
         return studiesRepository.findAll();
     }
 
-//    public Studies getStudies(Studies.StudiesId studiesId) throws Exception {
+//    The following methods are not implemented yet (trying to find a way to get only one studies by id),
+//    need to see if they are even needed
+//
+//    public Enrolled getStudies(Enrolled.EnrolledId studiesId) throws Exception {
 //        return studiesRepository.findById(studiesId).orElseThrow(() -> new Exception("Can't find studies id"));
 //    }
 //
-//    public Studies getStudies(Instructor courseNum, Student studentId) throws Exception {
+//    public Enrolled getStudies(Instructor courseNum, Semester studentId) throws Exception {
 //        return getAllStudies().stream().filter(t -> t.getCourse().equals(courseNum) && t.getStudent().equals(studentId)).findFirst().get();
 //    }
 
-    public Studies getStudies(Studies.StudiesId studiesId) throws Exception {
-        return studiesRepository.findById(studiesId).orElseThrow(() -> new Exception("Can't find studies id"));
-    }
-
-    public void addStudies(Studies studies) {
-        studiesRepository.save(studies);
-    }
-
-    public void updateStudies(Studies.StudiesId studiesId, Studies studies) {
-        studiesRepository.save(studies);
-    }
+//    The following methods are not implemented yet, need to see if they are even needed
+//
+//    public Studies getStudies(StudiesId studiesId) throws Exception {
+//        return studiesRepository.findById(studiesId).orElseThrow(() -> new Exception("Can't find studies id"));
+//    }
+//
+//    public void addStudies(Studies studies) {
+//        studiesRepository.save(studies);
+//    }
+//
+//    public void updateStudies(StudiesId studiesId, Studies studies) {
+//        studiesRepository.save(studies);
+//    }
 }

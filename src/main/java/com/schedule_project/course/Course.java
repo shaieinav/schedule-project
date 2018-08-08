@@ -85,16 +85,16 @@ public class Course {
         this.instructorsCourses = instructorsCourses;
     }
 
-//    public void addStudent(Student student, String studyDay, Time studyTime) {
-//        Studies studies = new Studies(this, student, studyDay, studyTime);
+//    public void addStudent(Semester student, String studyDay, Time studyTime) {
+//        Enrolled studies = new Enrolled(this, student, studyDay, studyTime);
 //        students.add(studies);
 //        student.getCourses().add(studies);
 //    }
 //
-//    public void removeStudent(Student student) {
-//        for (Iterator<Studies> iterator = students.iterator(); iterator.hasNext(); ) {
+//    public void removeStudent(Semester student) {
+//        for (Iterator<Enrolled> iterator = students.iterator(); iterator.hasNext(); ) {
 //
-//            Studies studies = iterator.next();
+//            Enrolled studies = iterator.next();
 //
 //            if (studies.getStudentObj().equals(student) && studies.getCourseObj().equals(this)) {
 //                iterator.remove();

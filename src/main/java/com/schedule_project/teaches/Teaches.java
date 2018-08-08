@@ -8,48 +8,11 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
-import java.util.Objects;
 
 @Entity
 @Table(name = "teaches")
 @EqualsAndHashCode
 public class Teaches implements Serializable {
-
-    @Embeddable
-    @EqualsAndHashCode
-    public static class TeachesId implements Serializable {
-
-        @Column(name = "teaches_instructor_id")
-        protected Integer instructorId;
-
-        @Column(name = "teaches_course_num")
-        protected Integer courseNum;
-
-        public TeachesId() {
-
-        }
-
-        public TeachesId(Integer instructorId, Integer courseNum) {
-            this.instructorId = instructorId;
-            this.courseNum = courseNum;
-        }
-
-        public Integer getInstructorId() {
-            return instructorId;
-        }
-
-        public void setInstructorId(Integer instructorId) {
-            this.instructorId = instructorId;
-        }
-
-        public Integer getCourseNum() {
-            return courseNum;
-        }
-
-        public void setCourseNum(Integer courseNum) {
-            this.courseNum = courseNum;
-        }
-    }
 
     @EmbeddedId
     private TeachesId teachesId;
@@ -77,7 +40,7 @@ public class Teaches implements Serializable {
     }
 
     public Teaches(TeachesId teachesId, Instructor instructor, Course course, String teachDay, Time teachTime) {
-        this.teachesId = teachesId;
+        this.teachesId = new TeachesId(instructor.getInstructorId(), course.getCourseNum());
         this.instructor = instructor;
         this.course = course;
         this.teachDay = teachDay;

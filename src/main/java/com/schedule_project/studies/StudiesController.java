@@ -22,28 +22,34 @@ public class StudiesController {
         return studiesService.getAllStudies();
     }
 
+//    The following methods are not implemented yet (trying to find a way to get only one studies by id),
+//    need to see if they are even needed
+//
 //    @RequestMapping("/studies/{studiesId}")
-//    public Studies getStudies(@PathVariable Studies.StudiesId studiesId) throws Exception {
+//    public Enrolled getStudies(@PathVariable Enrolled.EnrolledId studiesId) throws Exception {
 //        return studiesService.getStudies(studiesId);
 //    }
 //
 //    @GetMapping("/studies/{courseNum}/{studentId}")
-//    public Studies getStudies(@PathVariable Instructor courseNum, @PathVariable Student studentId) throws Exception {
+//    public Enrolled getStudies(@PathVariable Instructor courseNum, @PathVariable Semester studentId) throws Exception {
 //        return studiesService.getStudies(courseNum, studentId);
 //    }
 
-    @GetMapping("/studies/{studiesId}")
-    public Studies getStudies(@PathVariable Studies.StudiesId studiesId) throws Exception {
-        return studiesService.getStudies(studiesId);
-    }
 
-    @PostMapping("/studies")
-    public void addStudies(@RequestBody Studies studies) {
-        studiesService.addStudies(studies);
-    }
-
-    @PutMapping("/studies/{studiesId}")
-    public void updateStudies(@RequestBody Studies studies, @PathVariable Studies.StudiesId studiesId) {
-        studiesService.updateStudies(studiesId, studies);
-    }
+//    The following methods are not implemented yet, need to see if they are even nedded
+//
+//    @GetMapping("/studies/{studiesId}")
+//    public Studies getStudies(@PathVariable StudiesId studiesId) throws Exception {
+//        return studiesService.getStudies(studiesId);
+//    }
+//
+//    @PostMapping("/studies")
+//    public void addStudies(@RequestBody Studies studies) {
+//        studiesService.addStudies(studies);
+//    }
+//
+//    @PutMapping("/studies/{studiesId}")
+//    public void updateStudies(@RequestBody Studies studies, @PathVariable StudiesId studiesId) {
+//        studiesService.updateStudies(studiesId, studies);
+//    }
 }

@@ -2,6 +2,7 @@ package com.schedule_project.student;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schedule_project.course.Course;
+import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.studies.Studies;
 import lombok.EqualsAndHashCode;
 
@@ -29,19 +30,24 @@ public class Student {
     private String email;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "studentJson")
+    @JsonManagedReference(value = "studentJson1")
     private List<Studies> studentsCourses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "studentJson2")
+    private List<Enrolled> studentsCoursesGroups = new ArrayList<>();
 
     public Student() {
 
     }
 
-    public Student(Integer studentId, String firstName, String lastName, String email, List<Studies> studentsCourses) {
+    public Student(Integer studentId, String firstName, String lastName, String email, List<Studies> studentsCourses, List<Enrolled> studentsCoursesGroups) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.studentsCourses = studentsCourses;
+        this.studentsCoursesGroups = studentsCoursesGroups;
     }
 
     public Integer getStudentId() {
@@ -80,20 +86,28 @@ public class Student {
         return studentsCourses;
     }
 
+    public List<Enrolled> getStudentsCoursesGroups() {
+        return studentsCoursesGroups;
+    }
+
+    public void setStudentsCoursesGroups(List<Enrolled> studentsCoursesGroups) {
+        this.studentsCoursesGroups = studentsCoursesGroups;
+    }
+
     public void setStudentsCourses(List<Studies> studentsCourses) {
         this.studentsCourses = studentsCourses;
     }
 
 //    public void addCourse(Instructor course, String studyDay, Time studyTime) {
-//        Studies studies = new Studies(course, this, studyDay, studyTime);
+//        Enrolled studies = new Enrolled(course, this, studyDay, studyTime);
 //        courses.add(studies);
 //        course.getStudents().add(studies);
 //    }
 //
 //    public void removeCourse(Instructor course) {
-//        for (Iterator<Studies> iterator = courses.iterator(); iterator.hasNext(); ) {
+//        for (Iterator<Enrolled> iterator = courses.iterator(); iterator.hasNext(); ) {
 //
-//            Studies studies = iterator.next();
+//            Enrolled studies = iterator.next();
 //
 //            if (studies.getStudentObj().equals(this) && studies.getCourseObj().equals(course)) {
 //                iterator.remove();
@@ -106,7 +120,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Semester{" +
                 "studentId=" + studentId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
