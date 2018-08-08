@@ -77,6 +77,14 @@ public class Course {
         this.studentsCourses = studentsCourses;
     }
 
+    public List<Teaches> getInstructorsCourses() {
+        return instructorsCourses;
+    }
+
+    public void setInstructorsCourses(List<Teaches> instructorsCourses) {
+        this.instructorsCourses = instructorsCourses;
+    }
+
 //    public void addStudent(Student student, String studyDay, Time studyTime) {
 //        Studies studies = new Studies(this, student, studyDay, studyTime);
 //        students.add(studies);

@@ -1,5 +1,6 @@
 package com.schedule_project.student;
 
+import com.schedule_project.studies.Studies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,11 @@ public class StudentController {
     @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable Integer studentId) throws Exception {
         return studentService.getStudent(studentId);
+    }
+
+    @GetMapping("/students/{studentId}/courses")
+    public List<Studies> getStudentCourses(@PathVariable Integer studentId) throws Exception {
+        return studentService.getStudentCourses(studentId);
     }
 
     @PostMapping("/students")

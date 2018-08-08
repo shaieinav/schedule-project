@@ -1,5 +1,6 @@
 package com.schedule_project.instructor;
 
+import com.schedule_project.teaches.Teaches;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class InstructorService {
 
     public Instructor getInstructor(Integer instructorId) throws Exception {
         return instructorRepository.findById(instructorId).orElseThrow(() -> new Exception("Can't find instructor id"));
+    }
+
+    public List<Teaches> getInstructorCourses(Integer instructorId) throws Exception {
+        return instructorRepository.findById(instructorId).orElseThrow(() -> new Exception("Can't find instructor id")).getInstructorsCourses();
     }
 
     public void addInstructor(Instructor instructor) {

@@ -1,5 +1,6 @@
 package com.schedule_project.instructor;
 
+import com.schedule_project.teaches.Teaches;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ public class InstructorController {
     @GetMapping("/instructors/{instructorId}")
     public Instructor getInstructor(@PathVariable Integer instructorId) throws Exception {
         return instructorService.getInstructor(instructorId);
+    }
+
+    @GetMapping("/instructors/{instructorId}/courses")
+    public List<Teaches> getInstructorCourses(@PathVariable Integer instructorId) throws Exception {
+        return instructorService.getInstructorCourses(instructorId);
     }
 
     @PostMapping("/instructors")
