@@ -1,6 +1,7 @@
 package com.schedule_project.semester;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.schedule_project.course_group.CourseGroup;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -26,19 +27,20 @@ public class Semester {
     @Column(name = "semester_end")
     private Date semesterEnd;
 
-//    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference(value = "semesterJson")
-//    private List<Enrolled> studentsCourses = new ArrayList<>();
+    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "semesterJson")
+    private List<CourseGroup> semesterCourseGroups = new ArrayList<>();
 
     public Semester() {
 
     }
 
-    public Semester(String semesterName, String season, Date semesterStart, Date semesterEnd) {
+    public Semester(String semesterName, String season, Date semesterStart, Date semesterEnd, List<CourseGroup> semesterCourseGroups) {
         this.semesterName = semesterName;
         this.season = season;
         this.semesterStart = semesterStart;
         this.semesterEnd = semesterEnd;
+        this.semesterCourseGroups = semesterCourseGroups;
     }
 
     public String getSemesterName() {
@@ -71,6 +73,14 @@ public class Semester {
 
     public void setSemesterEnd(Date semesterEnd) {
         this.semesterEnd = semesterEnd;
+    }
+
+    public List<CourseGroup> getSemesterCourseGroups() {
+        return semesterCourseGroups;
+    }
+
+    public void setSemesterCourseGroups(List<CourseGroup> semesterCourseGroups) {
+        this.semesterCourseGroups = semesterCourseGroups;
     }
 
     @Override

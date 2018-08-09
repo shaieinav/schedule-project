@@ -1,5 +1,6 @@
 package com.schedule_project.semester;
 
+import com.schedule_project.course_group.CourseGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,12 @@ public class SemesterService {
     public Semester getSemester(String semesterName) throws Exception {
         return semesterRepository.findById(semesterName)
                                  .orElseThrow(() -> new Exception("Can't find semester id"));
+    }
+
+    public List<CourseGroup> getSemesterCourseGroups(String semesterName) throws Exception {
+        return semesterRepository.findById(semesterName)
+                                 .orElseThrow(() -> new Exception("Can't find semester id"))
+                                 .getSemesterCourseGroups();
     }
 
     public void addSemester(Semester semester) {

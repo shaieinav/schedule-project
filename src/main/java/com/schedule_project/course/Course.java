@@ -1,6 +1,7 @@
 package com.schedule_project.course;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.schedule_project.course_group.CourseGroup;
 import com.schedule_project.student.Student;
 import com.schedule_project.studies.Studies;
 import com.schedule_project.teaches.Teaches;
@@ -34,15 +35,20 @@ public class Course {
     @JsonManagedReference(value = "courseJson2")
     private List<Teaches> instructorsCourses = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value = "courseJson3")
+    private List<CourseGroup> courseGroups = new ArrayList<>();
+
     public Course() {
 
     }
 
-    public Course(Integer courseNum, String courseName, Integer courseCredit, List<Studies> studentsCourses) {
+    public Course(Integer courseNum, String courseName, Integer courseCredit, List<Studies> studentsCourses, List<CourseGroup> courseGroups) {
         this.courseNum = courseNum;
         this.courseName = courseName;
         this.courseCredit = courseCredit;
         this.studentsCourses = studentsCourses;
+        this.courseGroups = courseGroups;
     }
 
     public Integer getCourseNum() {
@@ -85,7 +91,14 @@ public class Course {
         this.instructorsCourses = instructorsCourses;
     }
 
-//    public void addStudent(Semester student, String studyDay, Time studyTime) {
+    public List<CourseGroup> getCourseGroups() {
+        return courseGroups;
+    }
+
+    public void setCourseGroups(List<CourseGroup> courseGroups) {
+        this.courseGroups = courseGroups;
+    }
+    //    public void addStudent(Semester student, String studyDay, Time studyTime) {
 //        Enrolled studies = new Enrolled(this, student, studyDay, studyTime);
 //        students.add(studies);
 //        student.getCourses().add(studies);

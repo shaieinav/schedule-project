@@ -1,5 +1,6 @@
 package com.schedule_project.semester;
 
+import com.schedule_project.course_group.CourseGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,11 @@ public class SemesterController {
     @GetMapping("/semesters/{semesterName}")
     public Semester getSemester(@PathVariable String semesterName) throws Exception {
         return semesterService.getSemester(semesterName);
+    }
+
+    @GetMapping("/semesters/{semesterName}/courseGroups")
+    public List<CourseGroup> getSemesterCourseGroups(@PathVariable String semesterName) throws Exception {
+        return semesterService.getSemesterCourseGroups(semesterName);
     }
 
     @PostMapping("/semesters")

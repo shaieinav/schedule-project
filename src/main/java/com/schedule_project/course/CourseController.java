@@ -1,5 +1,6 @@
 package com.schedule_project.course;
 
+import com.schedule_project.course_group.CourseGroup;
 import com.schedule_project.studies.Studies;
 import com.schedule_project.teaches.Teaches;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class CourseController {
     @GetMapping("/courses/{courseNum}/instructors")
     public List<Teaches> getCourseInstructors(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourseInstructors(courseNum);
+    }
+
+    @GetMapping("/courses/{courseNum}/courseGroups")
+    public List<CourseGroup> getCourseGroups(@PathVariable Integer courseNum) throws Exception {
+        return courseService.getCourseGroups(courseNum);
     }
 
     @PostMapping("/courses")

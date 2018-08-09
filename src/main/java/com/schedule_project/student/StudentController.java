@@ -32,7 +32,7 @@ public class StudentController {
         return studentService.getStudentCourses(studentId);
     }
 
-    @GetMapping("/students/{studentId}/coursesGroups")
+    @GetMapping("/students/{studentId}/courseGroups")
     public List<Enrolled> getStudentCoursesGroups(@PathVariable Integer studentId) throws Exception {
         return studentService.getStudentCoursesGroups(studentId);
     }
