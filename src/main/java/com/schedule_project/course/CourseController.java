@@ -24,6 +24,7 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/courses/{courseNum}")
     public Course getCourse(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourse(courseNum);

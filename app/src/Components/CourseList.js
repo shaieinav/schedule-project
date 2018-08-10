@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonGroup, Container, Table, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
-import AppNavbar from './AppNavbar';
+import AppNavBar from '../AppNavBar';
 import { Link } from 'react-router-dom';
 
 class CourseList extends Component {
@@ -16,14 +16,14 @@ class CourseList extends Component {
             filter: []
         };
 
-        this.handleChange = this.handleChange.bind(this);
+        //this.handleChange = this.handleChange.bind(this);
         this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
 
-        this.setState({isLoading: true});
-        this.setState({filter: []});
+        // this.setState({isLoading: true});
+        // this.setState({filter: []});
 
         fetch('courses')
             .then(response => response.json())
@@ -49,9 +49,11 @@ class CourseList extends Component {
 
     handleChange = (event) => {
         try {
-            this.setState({search: event.target.value});
-            let filter = this.state.courses.filter(course => course.courseName.includes(this.state.search));
-            this.setState({filter: filter});
+            let filter = [...this.state.items].filter(
+                item =>
+                    item.courseName.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0);
+            this.setState({filter : filter,
+                search: event.target.value})
         }
         catch (error) {
             console.log(error);
@@ -84,7 +86,7 @@ class CourseList extends Component {
 
         return (
             <div>
-                <AppNavbar/>
+                <AppNavBar/>
                 <Container fluid>
 
                     <div className="float-right">
