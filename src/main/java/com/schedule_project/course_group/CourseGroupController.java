@@ -19,14 +19,17 @@ public class CourseGroupController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/courseGroups")
-    public List<CourseGroup> getAllCourses() {
-        return courseGroupService.getAllCourses();
+    public List<CourseGroup> getAllCourseGroups() {
+        return courseGroupService.getAllCourseGroups();
     }
 
     /*
-    @GetMapping("/courses/{courseNum}")
-    public CourseGroup getCourse(@PathVariable Integer courseNum) throws Exception {
-        return courseGroupService.getCourse(courseNum);
+    @GetMapping("/courses/{semesterName}/{courseNum}/{courseGroupNum}")
+    public CourseGroup getCourseGroup(@PathVariable CourseGroupId courseGroupId) throws Exception {
+        @PathVariable Integer courseGroupNum = courseGroupId.getGroupNum();
+        Integer courseNum = courseGroupId.getCourseNum();
+        String semesterName = courseGroupId.getSemesterName();
+        return courseGroupService.getCourseGroup(courseGroupId);
     }
 
     @GetMapping("/courses/{courseNum}/students")

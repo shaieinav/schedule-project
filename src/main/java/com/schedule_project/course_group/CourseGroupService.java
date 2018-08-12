@@ -13,13 +13,13 @@ public class CourseGroupService {
     @Autowired
     private CourseGroupRepository courseGroupRepository;
 
-    public List<CourseGroup> getAllCourses() {
+    public List<CourseGroup> getAllCourseGroups() {
         return courseGroupRepository.findAll();
     }
 
     /*
-    public CourseGroup getCourse(Integer courseNum) throws Exception {
-        return courseGroupRepository.findById(courseNum).orElseThrow(() -> new Exception("Can't find course id"));
+    public CourseGroup getCourseGroup(CourseGroupId courseGroupId) throws Exception {
+        return courseGroupRepository.findById(courseGroupId).orElseThrow(() -> new Exception("Can't find course id"));
     }
 
     public List<Studies> getCourseStudents(Integer courseNum) throws Exception {

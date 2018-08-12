@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 import { Button, ButtonGroup, Container, Table, Row, Col, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavBar from '../AppNavBar';
 import { Link } from 'react-router-dom';
@@ -12,18 +13,21 @@ class CourseList extends Component {
         this.state = {
             courses: [],
             isLoading: true,
-            search: '',
-            filter: []
+            query: '',
+            selectedOption: null,
+            // courseGroups: []
         };
 
-        //this.handleChange = this.handleChange.bind(this);
+        this.updateQuery = this.updateQuery.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        // this.handleChangeCourseGroup = this.handleChangeCourseGroup.bind(this);
         this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
 
-        // this.setState({isLoading: true});
-        // this.setState({filter: []});
+        this.setState({isLoading: true});
+        this.setState({filter: []});
 
         fetch('courses')
             .then(response => response.json())
@@ -32,6 +36,16 @@ class CourseList extends Component {
                 isLoading: false
             }));
     }
+
+    // componentDidUpdate(prevState) {
+    //     if (this.state.selectedOption !== prevState.selectedOption) {
+    //         fetch(`courses/${courseNum}/${courseGroups}`)
+    //             .then(response => response.json())
+    //             .then(data => this.setState({
+    //                 courseGroups: data
+    //             }));
+    //     }
+    // }
 
     async remove(courseNum) {
 
@@ -47,28 +61,37 @@ class CourseList extends Component {
         });
     }
 
-    handleChange = (event) => {
-        try {
-            let filter = [...this.state.items].filter(
-                item =>
-                    item.courseName.toLowerCase().indexOf(event.target.value.toLowerCase()) >= 0);
-            this.setState({filter : filter,
-                search: event.target.value})
-        }
-        catch (error) {
-            console.log(error);
-        }
-    };
+    updateQuery = (query) => {
+        this.setState(() => ({
+            query: query
+        }))
+    }
+
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+        console.log(`Option selected:`, selectedOption);
+    }
+
+    // handleChangeCourseGroup = (selectedOption) => {
+    //     this.setState({ selectedOption });
+    //     console.log(`Option selected:`, selectedOption);
+    // }
 
     render() {
 
-        const {courses, isLoading, search, filter} = this.state;
+        const { courses, isLoading, query } = this.state;
+        const filteredCourses =
+            query === ''
+            ? courses
+            : courses.filter((course) => (
+                course.courseName.toLowerCase().includes(query.toLowerCase())
+            ))
 
         if (isLoading) {
             return <p>Loading... Please Wait</p>;
         }
 
-        const courseList = filter.map(course => {
+        const courseList = filteredCourses.map(course => {
             return (
                 <tr key={course.courseNum}>
                     <td style={{whiteSpace: 'nowrap'}}>{course.courseNum}</td>
@@ -83,6 +106,13 @@ class CourseList extends Component {
                 </tr>
             )
         });
+
+        const courseOptions = filteredCourses.map(function (course) {
+            return { value: course.courseNum, label: course.courseName };
+        })
+        // const courseGroupOptions = courseGroups.map(function (courseGroup) {
+        //     return { value: courseGroup.courseGroupId, label: courseGroup.courseGroupNum };
+        // })
 
         return (
             <div>
@@ -102,28 +132,46 @@ class CourseList extends Component {
                             <div className="search-course">
                                 <Container>
                                     <Form>
+
+                                        <Select options={courseOptions}
+                                                valueKey='courseNum'
+                                                lableKey='courseName'
+                                                placeholder={'Search for a course'}
+                                                autoComplete='courseName'
+                                                onChange={this.handleChange}
+                                        />
+
+                                        {/*<Select options={courseGroupOptions}*/}
+                                                {/*valueKey='courseNum'*/}
+                                                {/*lableKey='courseName'*/}
+                                                {/*placeholder={'Search for a course'}*/}
+                                                {/*autoComplete='courseName'*/}
+                                                {/*onChange={this.handleChangeCuorseGroup}*/}
+                                        {/*/>*/}
+
+                                        {/*<FormGroup>*/}
+                                            {/*<Label for='courseNum'>Choose Course Name</Label>*/}
+                                            {/*<Input type='text' name='courseNum' id='courseNum'*/}
+                                                   {/*className='search-courses' value={this.state.query}*/}
+                                                   {/*placeholder={'Search for a course'} autoComplete='courseNum'*/}
+                                                   {/*onChange={(event) => this.updateQuery(event.target.value)}*/}
+                                            {/*/>*/}
+                                        {/*</FormGroup>*/}
+
                                         <FormGroup>
-                                            <Label for="courseNum">Choose Course Number or Name</Label>
-                                            <Input type="text" name="courseNum" id="courseNum"
-                                                   value={this.state.search || ''}
-                                                   placeholder={"Enter a Course"}
-                                                   onChange={this.handleChange} autoComplete="courseNum"
+                                            <Label for='courseNum'>Choose Semester</Label>
+                                            <Input type='text' name='semester' id='semester'
+                                                   className='choose-semester' value={this.state.query}
+                                                   placeholder={'Choose Semester'} autoComplete='semester'
+                                                   onChange={(event) => this.updateQuery(event.target.value)}
                                             />
                                         </FormGroup>
                                         <FormGroup>
-                                            <Label for="courseNum">Choose Semester</Label>
-                                            <Input type="text" name="semester" id="semester"
-                                                   value={this.state.search || ''}
-                                                   placeholder={"Choose Semester"}
-                                                   onChange={this.handleChange} autoComplete="semester"
-                                            />
-                                        </FormGroup>
-                                        <FormGroup>
-                                            <Label for="courseNum">Choose a Course Group</Label>
-                                            <Input type="text" name="courseGroup" id="courseGroup"
-                                                   value={this.state.search || ''}
-                                                   placeholder={"Choose Course Group"}
-                                                   onChange={this.handleChange} autoComplete="courseGroup"
+                                            <Label for='courseNum'>Choose a Course Group</Label>
+                                            <Input type='text' name='courseGroup' id='courseGroup'
+                                                   className='choose-course-group' value={this.state.query}
+                                                   placeholder={'Choose Course Group'} autoComplete='courseGroup'
+                                                   onChange={(event) => this.updateQuery(event.target.value)}
                                             />
                                         </FormGroup>
                                     </Form>

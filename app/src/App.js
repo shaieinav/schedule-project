@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
-import Home from './Components/Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CourseList from './Components/CourseList';
-import CourseEdit from './Components/CourseEdit';
+import './App.css';
+import Home from './components/Home';
+import CourseList from './components/CourseList';
+import CourseEdit from './components/CourseEdit';
 
 class App extends Component {
 
