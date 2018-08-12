@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ButtonGroup, Container, Table, Row, Col, Form, FormGroup, Input, Label} from 'reactstrap';
+import {Button, ButtonGroup, Table} from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 const courseTableComponent = (props) => {
