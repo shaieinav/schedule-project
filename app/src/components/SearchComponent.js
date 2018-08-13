@@ -12,8 +12,20 @@ const searchComponent = (props) => {
     //console.log(props.selectedOption);
     let groupOptions = props.selectedOption.map(group => group.courseGroupId)
         .map(group => {
-            return {value: group.groupNum, label: (`${group.groupLocation}, ${group.groupNum}`)};
+            return {value: group.groupNum, label: (`Location: ${group.groupLocation}, 
+            Group Number: ${group.groupNum}`)};
         });
+    let placeholder;
+    let disabled;
+    console.log(props.selectedOption === [])
+    if (props.selectedOption.length === 0) {
+        placeholder = "No groups available";
+        disabled = true;
+    } else {
+        placeholder = "Choose Group";
+        disabled = false;
+    }
+
 
     //console.log(groupOptions);
 
@@ -35,6 +47,8 @@ const searchComponent = (props) => {
                         <Label for="courseNum">Choose a Course Group</Label>
                         <Select
                             options={groupOptions}
+                            placeholder = {placeholder}
+                            isDisabled = {disabled}
                         />
                     </FormGroup>
                 </Form>
