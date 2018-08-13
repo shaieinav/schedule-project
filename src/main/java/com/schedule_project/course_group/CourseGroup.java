@@ -25,6 +25,10 @@ public class CourseGroup {
     @Column(name = "hours")
     private String hours;
 
+    @Column(name = "day")
+    private String day;
+
+
     @Column(name = "course_group_instructor_id")
     private Integer instructorId;
 
@@ -51,11 +55,12 @@ public class CourseGroup {
 
     }
 
-    public CourseGroup(CourseGroupId courseGroupId, String teachingType, String hours, Integer instructorId,
+    public CourseGroup(CourseGroupId courseGroupId, String teachingType, String hours, String day, Integer instructorId,
                        Integer instructorRating, List<Enrolled> studentsCoursesGroups, Course course, Semester semester) {
         this.courseGroupId = courseGroupId;
         this.teachingType = teachingType;
         this.hours = hours;
+        this.day = day;
         this.instructorId = instructorId;
         this.instructorRating = instructorRating;
         this.studentsCoursesGroups = studentsCoursesGroups;
@@ -111,6 +116,14 @@ public class CourseGroup {
         this.studentsCoursesGroups = studentsCoursesGroups;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -133,6 +146,7 @@ public class CourseGroup {
                 "courseGroupId=" + courseGroupId +
                 ", teachingType='" + teachingType + '\'' +
                 ", hours='" + hours + '\'' +
+                ", day='" + day + '\'' +
                 ", instructorId='" + instructorId + '\'' +
                 ", instructorRating='" + instructorRating + '\'' +
                 ", studentsCoursesGroups=" + studentsCoursesGroups +
