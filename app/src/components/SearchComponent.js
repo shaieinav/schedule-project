@@ -15,9 +15,8 @@ const searchComponent = (props) => {
             return {value: group.groupNum, label: (`Location: ${group.groupLocation}, 
             Group Number: ${group.groupNum}`)};
         });
-    let placeholder;
-    let disabled;
-    console.log(props.selectedOption === [])
+    let placeholder, disabled;
+    //console.log(props.selectedOption === [])
     if (props.selectedOption.length === 0) {
         placeholder = "No groups available";
         disabled = true;
@@ -25,7 +24,6 @@ const searchComponent = (props) => {
         placeholder = "Choose Group";
         disabled = false;
     }
-
 
     //console.log(groupOptions);
 
