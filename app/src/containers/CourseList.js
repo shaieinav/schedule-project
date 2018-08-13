@@ -3,7 +3,6 @@ import { Button, Container, Row, Col } from 'reactstrap';
 import AppNavBar from './AppNavBar';
 import { Link } from 'react-router-dom';
 import SearchComponent from '../components/SearchComponent';
-import CourseTableComponent from '../components/CourseTableComponent';
 import CalendarComponent from '../components/CalendarComponent';
 
 class CourseList extends Component {
@@ -17,6 +16,7 @@ class CourseList extends Component {
             isLoading: true,
             query: '',
             selectedOption: [],
+            courseObject: []
         };
 
         this.updateQuery = this.updateQuery.bind(this);
@@ -68,9 +68,16 @@ class CourseList extends Component {
             )
     };
 
+    handleAddingCourseToCalendar = (event, courseObj) => {
+        event.preventDefault();
+        this.setState({
+            courseObject: courseObj
+        })
+    }
+
     render() {
 
-        const { courses, isLoading, query, selectedOption } = this.state;
+        const { courses, isLoading, query, selectedOption, courseObject } = this.state;
 
         const filteredCourses =
             query === ''
@@ -104,10 +111,13 @@ class CourseList extends Component {
                                 filteredCourses={filteredCourses}
                                 updateQuery={this.updateQuery}
                                 handleChosenCourse={this.handleChosenCourse}
+                                handleAddingCourseToCalendar={this.handleAddingCourseToCalendar}
                             />
                         </Col>
                         <Col md={9} xs={12}>
-                            <CalendarComponent/>
+                            <CalendarComponent
+                                courseObject = {courseObject}
+                            />
                         </Col>
                     </Row>
                 </Container>
