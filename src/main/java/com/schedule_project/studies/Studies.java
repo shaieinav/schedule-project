@@ -2,7 +2,6 @@ package com.schedule_project.studies;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schedule_project.course.Course;
@@ -33,13 +32,13 @@ public class Studies implements Serializable {
     private String studyDay;
 
     @Column(name = "study_time")
-    private Time studyTime;
+    private String studyTime;
 
     public Studies() {
 
     }
 
-    public Studies(Course course, Student student, String studyDay, Time studyTime) {
+    public Studies(Course course, Student student, String studyDay, String studyTime) {
         this.studiesId = new StudiesId(course.getCourseNum(), student.getStudentId());
         this.studyDay = studyDay;
         this.studyTime = studyTime;
@@ -89,11 +88,11 @@ public class Studies implements Serializable {
         this.studyDay = studyDay;
     }
 
-    public Time getStudyTime() {
+    public String getStudyTime() {
         return studyTime;
     }
 
-    public void setStudyTime(Time studyTime) {
+    public void setStudyTime(String studyTime) {
         this.studyTime = studyTime;
     }
 

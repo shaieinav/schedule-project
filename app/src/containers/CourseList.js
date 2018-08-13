@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Button, Container, Row, Col } from 'reactstrap';
 import AppNavBar from './AppNavBar';
 import { Link } from 'react-router-dom';
-import SearchComponent from '../components/SearchComponent'
-import CourseTableComponent from '../components/CourseTableComponent'
+import SearchComponent from '../components/SearchComponent';
+import CourseTableComponent from '../components/CourseTableComponent';
+import CalendarComponent from '../components/CalendarComponent';
 
 class CourseList extends Component {
 
@@ -54,10 +55,11 @@ class CourseList extends Component {
     };
 
     handleChosenCourse = (courseNum) => {
-        let updatedChosenCourse = [];
+        let updatedChosenCourse;
         fetch(`courses/${courseNum.value}`)
             .then(response => response.json())
             .then(data => {
+                console.log(data.courseGroups);
                 updatedChosenCourse = data.courseGroups;
                     this.setState({
                         selectedOption: updatedChosenCourse
@@ -105,10 +107,7 @@ class CourseList extends Component {
                             />
                         </Col>
                         <Col md={9} xs={12}>
-                            <CourseTableComponent
-                                filteredCourses={filteredCourses}
-                                remove={this.remove}
-                            />
+                            <CalendarComponent/>
                         </Col>
                     </Row>
                 </Container>

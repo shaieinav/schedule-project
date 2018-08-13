@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 
 @Entity
 @Table(name = "teaches")
@@ -33,13 +32,13 @@ public class Teaches implements Serializable {
     private String teachDay;
 
     @Column(name = "teach_time")
-    private Time teachTime;
+    private String teachTime;
 
     public Teaches() {
 
     }
 
-    public Teaches(TeachesId teachesId, Instructor instructor, Course course, String teachDay, Time teachTime) {
+    public Teaches(TeachesId teachesId, Instructor instructor, Course course, String teachDay, String teachTime) {
         this.teachesId = new TeachesId(instructor.getInstructorId(), course.getCourseNum());
         this.instructor = instructor;
         this.course = course;
@@ -81,11 +80,11 @@ public class Teaches implements Serializable {
         this.teachDay = teachDay;
     }
 
-    public Time getTeachTime() {
+    public String getTeachTime() {
         return teachTime;
     }
 
-    public void setTeachTime(Time teachTime) {
+    public void setTeachTime(String teachTime) {
         this.teachTime = teachTime;
     }
 

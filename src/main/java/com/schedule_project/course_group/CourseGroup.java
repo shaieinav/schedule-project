@@ -8,7 +8,6 @@ import com.schedule_project.semester.Semester;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class CourseGroup {
     private String teachingType;
 
     @Column(name = "hours")
-    private Time hours;
+    private String hours;
 
     @Column(name = "course_group_instructor_id")
     private Integer instructorId;
@@ -52,7 +51,7 @@ public class CourseGroup {
 
     }
 
-    public CourseGroup(CourseGroupId courseGroupId, String teachingType, Time hours, Integer instructorId,
+    public CourseGroup(CourseGroupId courseGroupId, String teachingType, String hours, Integer instructorId,
                        Integer instructorRating, List<Enrolled> studentsCoursesGroups, Course course, Semester semester) {
         this.courseGroupId = courseGroupId;
         this.teachingType = teachingType;
@@ -80,11 +79,11 @@ public class CourseGroup {
         this.teachingType = teachingType;
     }
 
-    public Time getHours() {
+    public String getHours() {
         return hours;
     }
 
-    public void setHours(Time hours) {
+    public void setHours(String hours) {
         this.hours = hours;
     }
 

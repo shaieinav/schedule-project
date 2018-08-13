@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "fullcalendar-reactwrapper": "^1.0.7",
+    "rc-week-schedule": "^1.0.1",
     "react": "^16.4.2",
     "react-cookie": "^2.2.0",
     "react-dom": "^16.4.2",
