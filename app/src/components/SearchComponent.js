@@ -23,7 +23,6 @@ const searchComponent = (props) => {
     });
 
     let placeholder, disabled;
-    //console.log(props.selectedOption === [])
     if (props.selectedOption.length === 0) {
         placeholder = "No groups available";
         disabled = true;
@@ -62,6 +61,7 @@ const searchComponent = (props) => {
                         />
                     </FormGroup>
                     <FormGroup>
+
                         <Label for="courseNum">Choose a Course Group</Label>
                         <Select
                             options={groupOptions}
