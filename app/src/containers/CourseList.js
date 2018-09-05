@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Container, Row, Col } from 'reactstrap';
+import React, {Component} from 'react';
+import {Container, Row, Col} from 'reactstrap';
 import AppNavBar from './AppNavBar';
-import { Link } from 'react-router-dom';
 import SearchComponent from '../components/SearchComponent';
 import CalendarComponent from '../components/CalendarComponent';
 
@@ -16,33 +15,15 @@ class CourseList extends Component {
             selectedOption: [],
             courseGroupObject: []
         };
-
-        this.updateQuery = this.updateQuery.bind(this);
-        this.handleChosenCourse = this.handleChosenCourse.bind(this);
-        this.remove = this.remove.bind(this);
     }
 
-
-    componentDidMount(){
+    componentDidMount() {
         fetch('courses')
             .then(response => response.json())
             .then(data => this.setState({
                 coursesList: data,
                 isLoading: false
             }));
-    }
-
-    async remove(courseNum) {
-
-        await fetch(`courses/${courseNum}`, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-            let updatedCourses = [...this.state.coursesList].filter(i => i.courseNum !== courseNum);
-            this.setState({coursesList: updatedCourses});
     }
 
     updateQuery = (query) => {
@@ -56,11 +37,12 @@ class CourseList extends Component {
         fetch(`courses/${courseNum.value}`)
             .then(response => response.json())
             .then(data => {
-                //console.log(data.courseGroups);
-                updatedChosenCourse = data.courseGroups;
-                    this.setState({
-                        selectedOption: updatedChosenCourse
-                    })
+                    updatedChosenCourse = data.courseGroups;
+                    if (updatedChosenCourse) {
+                        this.setState({
+                            selectedOption: updatedChosenCourse
+                        })
+                    }
                 }
             )
     };
@@ -68,20 +50,21 @@ class CourseList extends Component {
     handleAddingCourseToCalendar = (event, courseObj) => {
         event.preventDefault();
         this.setState({
-            courseGroupObject: courseObj
+            courseGroupObject: courseObj,
+            query: ''
         })
     }
 
     render() {
 
-        const { coursesList, isLoading, query, selectedOption, courseGroupObject } = this.state;
+        const {coursesList, isLoading, query, selectedOption, courseGroupObject} = this.state;
 
         const filteredCourses =
             query === ''
-            ? coursesList
-            : coursesList.filter((course) => (
-                course.courseName.toLowerCase().includes(query.toLowerCase())
-            ));
+                ? coursesList
+                : coursesList.filter((course) => (
+                    course.courseName.toLowerCase().includes(query.toLowerCase())
+                ));
 
         if (isLoading) {
             return <p>Loading... Please Wait</p>;
@@ -92,9 +75,9 @@ class CourseList extends Component {
                 <AppNavBar/>
                 <Container fluid>
 
-                    <div className="float-right">
+                    {/*                    <div className="float-right">
                         <Button color="success" tag={Link} to="/courses/new">Add Group</Button>
-                    </div>
+                    </div>*/}
 
                     <Row>
                         <h3>My Courses</h3>
@@ -113,7 +96,7 @@ class CourseList extends Component {
                         </Col>
                         <Col md={9} xs={12}>
                             <CalendarComponent
-                                courseObject = {courseGroupObject}
+                                courseObject={courseGroupObject}
                             />
                         </Col>
                     </Row>

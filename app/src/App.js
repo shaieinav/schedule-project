@@ -11,9 +11,8 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route path='/' exact={true} component={Home}/>
-                    <Route path='/courses' exact={true} component={CourseList}/>
-                    <Route path='/courses/:courseNum' component={CourseEdit}/>
+                    <Route path='/' exact={true} component={CourseList}/>
+                    {/*<Route path='/courses/:courseNum' component={CourseEdit}/>*/}
                 </Switch>
             </Router>
         )

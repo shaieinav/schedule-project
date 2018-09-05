@@ -7,7 +7,6 @@ const searchComponent = (props) => {
     const courseOptions = props.filteredCourses.map(course => {
         return {value: course.courseNum, label: course.courseName};
     });
-    //console.log(courseOptions);
 
     let groupOptions = props.selectedOption.map(group => {
         return {
@@ -31,12 +30,6 @@ const searchComponent = (props) => {
         disabled = false;
     }
 
-    // let groupPlaceholder = key => {
-    //     props.selectedOption.filter(option => {
-    //         return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key).toString())
-    //     }
-    // )
-    // };
     let groupPlaceholder;
     function func (key) {
         groupPlaceholder =  key;
@@ -70,8 +63,10 @@ const searchComponent = (props) => {
                             onChange={(value) => func(value.value)}
                         />
                     </FormGroup>
-                    <Button color="danger" onClick={(event) =>
-                        props.handleAddingCourseToCalendar(event, groupPlaceholder)}>Add Course</Button>
+                    <Button color="danger" onClick={(event) => {
+                        props.handleAddingCourseToCalendar(event, groupPlaceholder);
+
+                    }}>Add Course</Button>
                 </Form>
             </Container>
         </div>
