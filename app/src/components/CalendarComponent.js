@@ -27,7 +27,7 @@ class CalendarComponent extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (JSON.stringify(this.props) === JSON.stringify(nextProps)){
+        if (JSON.stringify(this.props) === JSON.stringify(nextProps)) {
             return false;
         }
         this.props = nextProps;
@@ -51,23 +51,32 @@ class CalendarComponent extends Component {
         };
         updatedEvents = [...this.state.events];
         updatedEvents.push(event);
-        this.setState ({events: updatedEvents});
+        this.setState({events: updatedEvents});
         return true;
     }
 
-    render () {
+    handleClick = (calEvent) => {
+        let deleteItem = window.confirm("Are you sure you want to delete this course?");
+        if (deleteItem) {
+            let updatedEvents = [...this.state.events];
+            updatedEvents = updatedEvents.filter(event => event.title !== calEvent.title)
+            console.log(updatedEvents);
+            this.setState({events: updatedEvents});
+        }
+    };
+
+    render() {
         let {events, options} = this.state;
         return (
             <FullCalendar
                 {...options}
                 events={events}
-                eventClick = {function(calEvent) {
-                    alert(calEvent.title)
-                }}
+                eventClick={(calEvent) => this.handleClick(calEvent)}
             />
         )
     }
 }
+
 
 export default CalendarComponent;
 

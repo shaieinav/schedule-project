@@ -38,6 +38,7 @@ class CourseList extends Component {
             .then(response => response.json())
             .then(data => {
                     updatedChosenCourse = data.courseGroups;
+                    console.log(data);
                     if (updatedChosenCourse) {
                         this.setState({
                             selectedOption: updatedChosenCourse
