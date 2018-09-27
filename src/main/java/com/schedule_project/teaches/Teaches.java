@@ -18,13 +18,11 @@ public class Teaches implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "instructorJson")
-//    @MapsId("studies_student_id")
     @JoinColumn(name = "teaches_instructor_id", insertable = false, updatable = false)
     private Instructor instructor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "courseJson2")
-//    @MapsId("studies_course_num")
     @JoinColumn(name = "teaches_course_num", insertable = false, updatable = false)
     private Course course;
 

@@ -55,6 +55,11 @@ public class CourseController {
         courseService.updateCourse(courseNum, course);
     }
 
+//    @GetMapping("/courses/{courseNum}/{semesterName}")
+//    public List<Course> getCourseBySemester(@PathVariable String semesterName, @PathVariable Integer courseNum) throws Exception {
+//        return courseService.getCourseBySemester(semesterName, courseNum);
+//    }
+
     @DeleteMapping("/courses/{courseNum}")
     public void deleteCourse(@PathVariable Integer courseNum) {
         courseService.deleteCourse(courseNum);

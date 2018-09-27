@@ -2,9 +2,12 @@ package com.schedule_project.studies;
 
 import com.schedule_project.course.Course;
 import com.schedule_project.student.Student;
+import com.schedule_project.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 @RestController

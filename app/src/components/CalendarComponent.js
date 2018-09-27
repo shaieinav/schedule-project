@@ -4,6 +4,7 @@ import 'fullcalendar-reactwrapper/dist/css/fullcalendar.min.css';
 import moment from 'moment';
 
 class CalendarComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -19,64 +20,94 @@ class CalendarComponent extends Component {
                 allDaySlot: false,
                 hiddenDays: [6],
                 defaultDate: moment('2018-04-01'),
-                columnFormat: 'ddd'
+                columnFormat: 'ddd',
             },
-            events: []
+            eventsA: [],
+            eventsB: [],
+            eventsC: [],
         }
     }
 
 
     componentWillReceiveProps(nextProps) {
+
         if (JSON.stringify(this.props) === JSON.stringify(nextProps)) {
             return false;
         }
         this.props = nextProps;
 
+        const colors = ['#FF8A80', '#FF80AB', '#EA80FC', '#B388FF', '#8C9EFF', '#82B1FF', '#80D8FF', '#84FFFF',
+            '#A7FFEB', '#B9F6CA', '#CCFF90', '#F4FF81', '#FFFF8D', '#FFE57F', '#FFD180', '#FF9E80',
+            '#D7CCC8', '#F5F5F5', '#CFD8DC']
+        const color = colors[Math.floor(Math.random() * colors.length)]
+
         let day, time, event, updatedEvents;
         let determineDay = function (day) {
-            if (day === "Sunday") return '2018-04-01';
-            else if (day === "Monday") return '2018-04-02';
-            else if (day === "Tuesday") return '2018-04-03';
-            else if (day === "Wednesday") return '2018-04-04';
-            else if (day === "Thursday") return '2018-04-05';
-            else if (day === "Friday") return '2018-04-06';
+            if (day === "א") return '2018-04-01';
+            else if (day === "ב") return '2018-04-02';
+            else if (day === "ג") return '2018-04-03';
+            else if (day === "ד") return '2018-04-04';
+            else if (day === "ה") return '2018-04-05';
+            else if (day === "ו") return '2018-04-06';
         };
         day = determineDay(this.props.courseObject[0].day);
         time = this.props.courseObject[0].hours.split(['-']);
         event = {
-            title: `Course Number: ${this.props.courseObject[0].courseGroupId.courseNum},
-                Location: ${this.props.courseObject[0].courseGroupId.groupLocation}`,
-            start: `${day}T${time[0]}`,
-            end: `${day}T${time[1]}`
+            title: `${this.props.courseObject[0].courseGroupId.courseNum}
+                    ${this.props.courseObject[0].courseGroupId.groupLocation}
+                    ${this.props.courseObject[0].courseGroupId.semesterName}`,
+            start: `${day}T${time[1]}`,
+            end: `${day}T${time[0]}`,
+            color: color,
+
         };
-        updatedEvents = [...this.state.events];
-        updatedEvents.push(event);
-        this.setState({events: updatedEvents});
+        console.log(this.props.courseObject[0].courseGroupId.semesterName);
+        if(this.props.courseObject[0].courseGroupId.semesterName.indexOf('א') > -1) {
+            updatedEvents = [...this.state.eventsA];
+            updatedEvents.push(event);
+            console.log(this.state.eventsA);
+            this.setState({eventsA: updatedEvents});
+        }
+        else if(this.props.courseObject[0].courseGroupId.semesterName.indexOf('ב') > -1) {
+            updatedEvents = [...this.state.eventsB];
+            updatedEvents.push(event);
+            this.setState({eventsB: updatedEvents});
+        }
+        else if(this.props.courseObject[0].courseGroupId.semesterName.indexOf('ג') > -1) {
+            updatedEvents = [...this.state.eventsC];
+            updatedEvents.push(event);
+            this.setState({eventsC: updatedEvents});
+        }
         return true;
     }
 
     handleClick = (calEvent) => {
         let deleteItem = window.confirm("Are you sure you want to delete this course?");
         if (deleteItem) {
-            let updatedEvents = [...this.state.events];
+            let updatedEvents = [...this.state.eventsA];
             updatedEvents = updatedEvents.filter(event => event.title !== calEvent.title)
             console.log(updatedEvents);
-            this.setState({events: updatedEvents});
+            this.setState({eventsA: updatedEvents});
         }
     };
 
     render() {
-        let {events, options} = this.state;
+
+        let {eventsA, eventsB, eventsC, options} = this.state;
+        let semester;
+        if (this.props.activeTabIndex === '1') semester = eventsA
+        else if (this.props.activeTabIndex === '2') semester = eventsB
+        else if (this.props.activeTabIndex === '3') semester = eventsC
+
         return (
+
             <FullCalendar
                 {...options}
-                events={events}
+                events={semester}
                 eventClick={(calEvent) => this.handleClick(calEvent)}
             />
         )
     }
 }
 
-
 export default CalendarComponent;
-

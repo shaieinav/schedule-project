@@ -26,6 +26,9 @@ export default class AppNavBar extends Component {
                         <NavItem>
                             <NavLink href="https://github.com/shaieinav/schedule-project">GitHub</NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink href="https://github.com/shaieinav/schedule-project">Login</NavLink>
+                        </NavItem>
                     </Nav>
                 </Collapse>
             </Navbar>

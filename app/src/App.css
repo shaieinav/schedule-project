@@ -26,6 +26,9 @@
   margin-top: 20px
 }
 
+h3 {
+  padding-left: 25px;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

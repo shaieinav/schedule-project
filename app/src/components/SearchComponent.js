@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import {Container, Form, FormGroup, Label, Button} from 'reactstrap';
+import {Container, Form, FormGroup, Label, Input, Button} from 'reactstrap';
 
 const searchComponent = (props) => {
 
@@ -8,15 +8,19 @@ const searchComponent = (props) => {
         return {value: course.courseNum, label: course.courseName};
     });
 
+    const semesterOptions = props.semestersList.map(semester => {
+       return {value: semester.semesterName, label: semester.semesterName};
+    });
+
     let groupOptions = props.selectedOption.map(group => {
         return {
             value: group.courseGroupId,
             label: (
                 `Location: ${group.courseGroupId.groupLocation}, \n 
-             Group Number: ${group.courseGroupId.groupNum}, \n
-             Day: ${group.day}, \n
-             Hours: ${group.hours}, \n
-             Teaching Type: ${group.teachingType}\n`
+                Group Number: ${group.courseGroupId.groupNum}, \n
+                Day: ${group.day}, \n
+                Hours: ${group.hours}, \n
+                Teaching Type: ${group.teachingType}\n`
             )
         }
     });
@@ -37,6 +41,7 @@ const searchComponent = (props) => {
                     return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key).toString())
                 })
         groupPlaceholder = temp;
+        console.log('group place holder:\n' + groupPlaceholder);
     }
 
     return (
@@ -54,7 +59,6 @@ const searchComponent = (props) => {
                         />
                     </FormGroup>
                     <FormGroup>
-
                         <Label for="courseNum">Choose a Course Group</Label>
                         <Select
                             options={groupOptions}
@@ -63,14 +67,20 @@ const searchComponent = (props) => {
                             onChange={(value) => func(value.value)}
                         />
                     </FormGroup>
+                    <FormGroup>
+                        <Label for="courseNum">Filters</Label>
+                        <Select
+                            options={semesterOptions}
+                            placeholder={'Filter By Semester'}
+                        />
+                    </FormGroup>
                     <Button color="danger" onClick={(event) => {
                         props.handleAddingCourseToCalendar(event, groupPlaceholder);
-
                     }}>Add Course</Button>
                 </Form>
             </Container>
         </div>
     )
-}
+};
 
 export default searchComponent;
