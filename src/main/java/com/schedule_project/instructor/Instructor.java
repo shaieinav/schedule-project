@@ -3,7 +3,6 @@ package com.schedule_project.instructor;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schedule_project.teaches.Teaches;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

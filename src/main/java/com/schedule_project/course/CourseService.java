@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,29 +17,34 @@ public class CourseService {
     private final Logger log = LoggerFactory.getLogger(CourseController.class);
 
     public List<Course> getAllCourses() {
+        log.info("Request to get all courses");
         return courseRepository.findAll();
     }
 
     public Course getCourse(Integer courseNum) throws Exception {
+        log.info("Request to get course: {}", courseNum);
         return courseRepository.findById(courseNum)
-                               .orElseThrow(() -> new Exception("Can't find course id"));
+                               .orElseThrow(() -> new Exception("Can't find course number"));
     }
 
     public List<Studies> getCourseStudents(Integer courseNum) throws Exception {
+        log.info("Request to get the course students: {}", courseNum);
         return courseRepository.findById(courseNum)
-                               .orElseThrow(() -> new Exception("Can't find course id"))
+                               .orElseThrow(() -> new Exception("Can't find course number"))
                                .getStudentsCourses();
     }
 
     public List<Teaches> getCourseInstructors(Integer courseNum) throws Exception {
+        log.info("Request to get the course instructors: {}", courseNum);
         return courseRepository.findById(courseNum)
-                               .orElseThrow(() -> new Exception("Can't find course id"))
+                               .orElseThrow(() -> new Exception("Can't find course number"))
                                .getInstructorsCourses();
     }
 
     public List<CourseGroup> getCourseGroups(Integer courseNum) throws Exception {
+        log.info("Request to get the course groups: {}", courseNum);
         return courseRepository.findById(courseNum)
-                               .orElseThrow(() -> new Exception("Can't find course id"))
+                               .orElseThrow(() -> new Exception("Can't find course number"))
                                .getCourseGroups();
     }
 
@@ -50,8 +53,8 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-    public void updateCourse(Integer course_num, Course course) {
-        log.info("Request to update course: {}", course);
+    public void updateCourse(Integer courseNum, Course course) {
+        log.info("Request to update course: {}", courseNum);
         courseRepository.save(course);
     }
 
@@ -59,8 +62,4 @@ public class CourseService {
         log.info("Request to delete course: {}", courseNum);
         courseRepository.deleteById(courseNum);
     }
-
-//    public List<Course> getCourseBySemester(String semesterName, Integer courseNum) {
-//        return courseRepository.findCourse(semesterName, courseNum);
-//    }
 }

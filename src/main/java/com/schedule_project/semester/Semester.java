@@ -3,7 +3,6 @@ package com.schedule_project.semester;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schedule_project.course_group.CourseGroup;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;

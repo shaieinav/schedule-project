@@ -3,7 +3,6 @@ package com.schedule_project.semester;
 import com.schedule_project.course_group.CourseGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,11 +15,13 @@ public class SemesterController {
         this.semesterService = semesterService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/semesters")
     public List<Semester> getAllSemesters() {
         return semesterService.getAllSemesters();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/semesters/{semesterName}")
     public Semester getSemester(@PathVariable String semesterName) throws Exception {
         return semesterService.getSemester(semesterName);

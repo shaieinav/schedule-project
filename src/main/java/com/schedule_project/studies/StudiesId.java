@@ -1,7 +1,6 @@
 package com.schedule_project.studies;
 
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;

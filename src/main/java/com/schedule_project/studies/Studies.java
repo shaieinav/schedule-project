@@ -2,7 +2,6 @@ package com.schedule_project.studies;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schedule_project.course.Course;
 import com.schedule_project.student.Student;
@@ -57,10 +56,6 @@ public class Studies implements Serializable {
         return student.getStudentId();
     }
 
-//    public Semester getStudentObj() {
-//        return student;
-//    }
-
     public void setStudent(Student student) {
         this.student = student;
     }
@@ -69,10 +64,6 @@ public class Studies implements Serializable {
     public Integer getCourse() {
         return course.getCourseNum();
     }
-
-//    public Instructor getCourseObj() {
-//        return course;
-//    }
 
     public void setCourse(Course course) {
         this.course = course;

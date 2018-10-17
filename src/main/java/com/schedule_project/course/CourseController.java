@@ -5,7 +5,6 @@ import com.schedule_project.studies.Studies;
 import com.schedule_project.teaches.Teaches;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -54,11 +53,6 @@ public class CourseController {
     public void updateCourse(@RequestBody Course course, @PathVariable Integer courseNum) {
         courseService.updateCourse(courseNum, course);
     }
-
-//    @GetMapping("/courses/{courseNum}/{semesterName}")
-//    public List<Course> getCourseBySemester(@PathVariable String semesterName, @PathVariable Integer courseNum) throws Exception {
-//        return courseService.getCourseBySemester(semesterName, courseNum);
-//    }
 
     @DeleteMapping("/courses/{courseNum}")
     public void deleteCourse(@PathVariable Integer courseNum) {

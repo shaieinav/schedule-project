@@ -1,14 +1,10 @@
 package com.schedule_project.student;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.schedule_project.course.Course;
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.studies.Studies;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
-
-import java.sql.Time;
 import java.util.*;
 
 @Entity
@@ -97,26 +93,6 @@ public class Student {
     public void setStudentsCourses(List<Studies> studentsCourses) {
         this.studentsCourses = studentsCourses;
     }
-
-//    public void addCourse(Instructor course, String studyDay, Time studyTime) {
-//        Enrolled studies = new Enrolled(course, this, studyDay, studyTime);
-//        courses.add(studies);
-//        course.getStudents().add(studies);
-//    }
-//
-//    public void removeCourse(Instructor course) {
-//        for (Iterator<Enrolled> iterator = courses.iterator(); iterator.hasNext(); ) {
-//
-//            Enrolled studies = iterator.next();
-//
-//            if (studies.getStudentObj().equals(this) && studies.getCourseObj().equals(course)) {
-//                iterator.remove();
-//                studies.getCourseObj().getStudents().remove(studies);
-//                studies.setStudent(null);
-//                studies.setCourse(null);
-//            }
-//        }
-//    }
 
     @Override
     public String toString() {

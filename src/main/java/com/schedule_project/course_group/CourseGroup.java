@@ -6,7 +6,6 @@ import com.schedule_project.course.Course;
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.semester.Semester;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +40,11 @@ public class CourseGroup {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "courseJson3")
-//    @MapsId("studies_student_id")
     @JoinColumn(name = "course_group_course_num", insertable = false, updatable = false)
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "semesterJson")
-//    @MapsId("studies_student_id")
     @JoinColumn(name = "course_group_semester_name", insertable = false, updatable = false)
     private Semester semester;
 

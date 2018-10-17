@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import {Container, Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import {Container, Form, FormGroup, Label, Button} from 'reactstrap';
 
 const searchComponent = (props) => {
 
@@ -8,18 +8,16 @@ const searchComponent = (props) => {
         return {value: course.courseNum, label: course.courseName};
     });
 
-    const semesterOptions = props.semestersList.map(semester => {
-       return {value: semester.semesterName, label: semester.semesterName};
-    });
-
     let groupOptions = props.selectedOption.map(group => {
         return {
             value: group.courseGroupId,
             label: (
-                `Location: ${group.courseGroupId.groupLocation}, \n 
+                `Course Number: ${group.courseGroupId.courseNum}, \n
+                Location: ${group.courseGroupId.groupLocation}, \n 
                 Group Number: ${group.courseGroupId.groupNum}, \n
                 Day: ${group.day}, \n
                 Hours: ${group.hours}, \n
+                Semester: ${group.courseGroupId.semesterName}, \n
                 Teaching Type: ${group.teachingType}\n`
             )
         }
@@ -35,13 +33,14 @@ const searchComponent = (props) => {
     }
 
     let groupPlaceholder;
-    function func (key) {
+
+    function handleChosenGroup(key) {
+        console.log('chosen group:\n' + key.courseNum);
         groupPlaceholder =  key;
         let temp = props.selectedOption.filter(option => {
                     return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key).toString())
                 })
         groupPlaceholder = temp;
-        console.log('group place holder:\n' + groupPlaceholder);
     }
 
     return (
@@ -64,17 +63,10 @@ const searchComponent = (props) => {
                             options={groupOptions}
                             placeholder={placeholder}
                             isDisabled={disabled}
-                            onChange={(value) => func(value.value)}
+                            onChange={(chosenGroup) => handleChosenGroup(chosenGroup.value)}
                         />
                     </FormGroup>
-                    <FormGroup>
-                        <Label for="courseNum">Filters</Label>
-                        <Select
-                            options={semesterOptions}
-                            placeholder={'Filter By Semester'}
-                        />
-                    </FormGroup>
-                    <Button color="danger" onClick={(event) => {
+                    <Button color="danger" active onClick={(event) => {
                         props.handleAddingCourseToCalendar(event, groupPlaceholder);
                     }}>Add Course</Button>
                 </Form>

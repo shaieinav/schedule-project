@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schedule_project.course_group.CourseGroup;
 import com.schedule_project.student.Student;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 
 @Entity
 @Table(name = "enrolled")
@@ -19,13 +17,11 @@ public class Enrolled implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "studentJson2")
-//    @MapsId("studies_student_id")
     @JoinColumn(name = "enrolled_student_id", insertable = false, updatable = false)
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value = "courseGroupJson1")
-//    @MapsId("studies_course_num")
     @JoinColumns({
             @JoinColumn(name = "enrolled_group_num", referencedColumnName = "group_num",
                         insertable = false, updatable = false),

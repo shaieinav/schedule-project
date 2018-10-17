@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schedule_project.course.Course;
 import com.schedule_project.instructor.Instructor;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
 package com.schedule_project.course_group;
 
-import com.schedule_project.studies.Studies;
-import com.schedule_project.teaches.Teaches;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,38 +12,10 @@ public class CourseGroupService {
 
     @Autowired
     private CourseGroupRepository courseGroupRepository;
+    private final Logger log = LoggerFactory.getLogger(CourseGroupController.class);
 
     public List<CourseGroup> getAllCourseGroups() {
+        log.info("Request to get all course groups");
         return courseGroupRepository.findAll();
     }
-
-    /*
-    public CourseGroup getCourseGroup(CourseGroupId courseGroupId) throws Exception {
-        return courseGroupRepository.findById(courseGroupId).orElseThrow(() -> new Exception("Can't find course id"));
-    }
-
-    public List<Studies> getCourseStudents(Integer courseNum) throws Exception {
-        return courseGroupRepository.findById(courseNum)
-                                    .orElseThrow(() -> new Exception("Can't find course id"))
-                                    .getStudentsCourses();
-    }
-
-    public List<Teaches> getCourseInstructors(Integer courseNum) throws Exception {
-        return courseGroupRepository.findById(courseNum)
-                                    .orElseThrow(() -> new Exception("Can't find course id"))
-                                    .getInstructorsCourses();
-    }
-
-    public void addCourse(CourseGroup courseGroup) {
-        courseGroupRepository.save(courseGroup);
-    }
-
-    public void updateCourse(Integer course_num, CourseGroup courseGroup) {
-        courseGroupRepository.save(courseGroup);
-    }
-
-    public void deleteCourse(Integer courseNum) {
-        courseGroupRepository.deleteById(courseNum);
-    }
-    */
 }
