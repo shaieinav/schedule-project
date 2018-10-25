@@ -29,7 +29,7 @@ class CourseList extends Component {
     }
 
     componentDidMount() {
-        fetch('courses')
+        fetch('api/courses')
             .then(response => response.json())
             .then(data => this.setState({
                 coursesList: data,
@@ -45,7 +45,7 @@ class CourseList extends Component {
 
     handleChosenCourse = (courseNum) => {
         let updatedChosenCourse, updatedCourseName, updatedChosenCourseData;
-        fetch(`courses/${courseNum.value}`)
+        fetch(`api/courses/${courseNum.value}`)
             .then(response => response.json())
             .then(data => {
                     updatedChosenCourse = data.courseGroups;

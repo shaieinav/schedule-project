@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class EnrolledId implements Serializable {
 
     @Column(name = "enrolled_student_id")
-    protected Integer studentId;
+    protected Long studentId;
 
     @Column(name = "enrolled_group_num")
     protected Integer groupNum;
@@ -28,7 +28,7 @@ public class EnrolledId implements Serializable {
 
     }
 
-    public EnrolledId(Integer studentId, Integer groupNum, String groupLocation, Integer courseNum, String semesterName) {
+    public EnrolledId(Long studentId, Integer groupNum, String groupLocation, Integer courseNum, String semesterName) {
         this.studentId = studentId;
         this.groupNum = groupNum;
         this.groupLocation = groupLocation;
@@ -36,11 +36,11 @@ public class EnrolledId implements Serializable {
         this.semesterName = semesterName;
     }
 
-    public Integer getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 

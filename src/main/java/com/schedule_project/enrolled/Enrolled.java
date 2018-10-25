@@ -57,7 +57,7 @@ public class Enrolled implements Serializable {
     }
 
     @Transient
-    public Integer getStudent() {
+    public Long getStudent() {
         return student.getStudentId();
     }
 

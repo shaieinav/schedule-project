@@ -36,7 +36,7 @@ public class Studies implements Serializable {
     }
 
     public Studies(Course course, Student student, String studyDay, String studyTime) {
-        this.studiesId = new StudiesId(course.getCourseNum(), student.getStudentId());
+        this.studiesId = new StudiesId(student.getStudentId(), course.getCourseNum());
         this.studyDay = studyDay;
         this.studyTime = studyTime;
         this.course = course;
@@ -52,7 +52,7 @@ public class Studies implements Serializable {
     }
 
     @Transient
-    public Integer getStudent() {
+    public Long getStudent() {
         return student.getStudentId();
     }
 

@@ -18,43 +18,43 @@ public class CourseController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/courses")
+    @GetMapping("/api/courses")
     public List<Course> getAllCourses() {
         return courseService.getAllCourses();
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/courses/{courseNum}")
+    @GetMapping("/api/courses/{courseNum}")
     public Course getCourse(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourse(courseNum);
     }
 
-    @GetMapping("/courses/{courseNum}/students")
+    @GetMapping("/api/courses/{courseNum}/students")
     public List<Studies> getCourseStudents(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourseStudents(courseNum);
     }
 
-    @GetMapping("/courses/{courseNum}/instructors")
+    @GetMapping("/api/courses/{courseNum}/instructors")
     public List<Teaches> getCourseInstructors(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourseInstructors(courseNum);
     }
 
-    @GetMapping("/courses/{courseNum}/courseGroups")
+    @GetMapping("/api/courses/{courseNum}/courseGroups")
     public List<CourseGroup> getCourseGroups(@PathVariable Integer courseNum) throws Exception {
         return courseService.getCourseGroups(courseNum);
     }
 
-    @PostMapping("/courses")
+    @PostMapping("/api/courses")
     public void addCourse(@RequestBody Course course) {
         courseService.addCourse(course);
     }
 
-    @PutMapping("/courses/{courseNum}")
+    @PutMapping("/api/courses/{courseNum}")
     public void updateCourse(@RequestBody Course course, @PathVariable Integer courseNum) {
         courseService.updateCourse(courseNum, course);
     }
 
-    @DeleteMapping("/courses/{courseNum}")
+    @DeleteMapping("/api/courses/{courseNum}")
     public void deleteCourse(@PathVariable Integer courseNum) {
         courseService.deleteCourse(courseNum);
     }
