@@ -1,5 +1,6 @@
 package com.schedule_project.student;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.role.Role;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,24 +37,36 @@ public class Student {
 
     @NotBlank
     @Size(max = 20)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotBlank
     @Size(max = 20)
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
     @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
+    private String imageUrl;
+
+    @Column(name = "email_verified", nullable = false)
+    private Boolean emailVerified = false;
+
     @NotBlank
+    @JsonIgnore
     @Size(max = 100)
     private String password;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    private String providerId;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -141,6 +155,38 @@ public class Student {
 
     public void setStudentsCourses(List<Studies> studentsCourses) {
         this.studentsCourses = studentsCourses;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
     }
 
     @Override

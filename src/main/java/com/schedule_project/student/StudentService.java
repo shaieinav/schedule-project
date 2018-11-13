@@ -2,6 +2,7 @@ package com.schedule_project.student;
 
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.exception.ResourceNotFoundException;
+import com.schedule_project.security.UserPrincipal;
 import com.schedule_project.studies.Studies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,5 +61,10 @@ public class StudentService {
     public Student getUserProfile(String username) {
         return studentRepository.findByUsername(username)
                                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+    }
+
+    public Student getCurrentUser(UserPrincipal userPrincipal) {
+        return studentRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 }

@@ -29,6 +29,12 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping("/user/me")
+    @PreAuthorize("hasRole('USER')")
+    public Student getCurrentUser(@CurrentUser UserPrincipal userPrincipal) throws ResourceNotFoundException {
+        return studentService.getCurrentUser(userPrincipal);
+    }
+
     @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable Long studentId) throws Exception {
         return studentService.getStudent(studentId);
@@ -59,12 +65,12 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
-    @GetMapping("/user/me")
-//    @PreAuthorize("hasRole('USER')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-        return userSummary;
-    }
+//    @GetMapping("/user/me")
+////    @PreAuthorize("hasRole('USER')")
+//    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+//        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+//        return userSummary;
+//    }
 
     @GetMapping("/users/{username}")
     public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
