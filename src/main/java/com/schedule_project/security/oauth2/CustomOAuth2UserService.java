@@ -46,31 +46,31 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         Optional<Student> userOptional = userRepository.findByEmail(oAuth2UserInfo.getEmail());
-        Student student;
+        Student user;
         if(userOptional.isPresent()) {
-            student = userOptional.get();
-            if(!student.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
+            user = userOptional.get();
+            if(!user.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
-                        student.getProvider() + " account. Please use your " + student.getProvider() +
+                        user.getProvider() + " account. Please use your " + user.getProvider() +
                         " account to login.");
             }
-            student = updateExistingUser(student, oAuth2UserInfo);
+            user = updateExistingUser(user, oAuth2UserInfo);
         } else {
-            student = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
+            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
-        return UserPrincipal.create(student, oAuth2User.getAttributes());
+        return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
     private Student registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        Student student = new Student();
+        Student user = new Student();
 
-        student.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
-        student.setProviderId(oAuth2UserInfo.getId());
-        student.setName(oAuth2UserInfo.getName());
-        student.setEmail(oAuth2UserInfo.getEmail());
-        student.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return userRepository.save(student);
+        user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
+        user.setProviderId(oAuth2UserInfo.getId());
+        user.setName(oAuth2UserInfo.getName());
+        user.setEmail(oAuth2UserInfo.getEmail());
+        user.setImageUrl(oAuth2UserInfo.getImageUrl());
+        return userRepository.save(user);
     }
 
     private Student updateExistingUser(Student existingUser, OAuth2UserInfo oAuth2UserInfo) {

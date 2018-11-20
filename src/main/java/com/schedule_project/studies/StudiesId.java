@@ -9,10 +9,10 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class StudiesId implements Serializable {
 
-    @Column(name = "studies_student_id")
+    @Column(name = "studies_student_id", nullable = false)
     protected Long studentId;
 
-    @Column(name = "studies_course_num")
+    @Column(name = "studies_course_num", nullable = false)
     protected Integer courseNum;
 
     public StudiesId() {

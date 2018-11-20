@@ -2,8 +2,6 @@ package com.schedule_project.student;
 
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.exception.ResourceNotFoundException;
-import com.schedule_project.payload.UserProfile;
-import com.schedule_project.payload.UserSummary;
 import com.schedule_project.security.CurrentUser;
 import com.schedule_project.security.UserPrincipal;
 import com.schedule_project.studies.Studies;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class StudentController {
 
     private final StudentService studentService;
@@ -63,21 +61,5 @@ public class StudentController {
     @DeleteMapping("/students/{studentId}")
     public void deleteStudent(@PathVariable Long studentId) {
         studentService.deleteStudent(studentId);
-    }
-
-//    @GetMapping("/user/me")
-////    @PreAuthorize("hasRole('USER')")
-//    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-//        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-//        return userSummary;
-//    }
-
-    @GetMapping("/users/{username}")
-    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
-        Student user = studentService.getUserProfile(username);
-
-        UserProfile userProfile = new UserProfile(user.getStudentId(), user.getUsername(), user.getName());
-
-        return userProfile;
     }
 }

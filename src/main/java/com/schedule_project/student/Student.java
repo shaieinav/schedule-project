@@ -21,9 +21,6 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "student", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
-                "username"
-        }),
-        @UniqueConstraint(columnNames = {
                 "email"
         })
 })
@@ -40,10 +37,10 @@ public class Student {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank
-    @Size(max = 20)
-    @Column(name = "username", nullable = false)
-    private String username;
+//    @NotBlank
+//    @Size(max = 20)
+//    @Column(name = "username", nullable = false)
+//    private String username;
 
     @NaturalId
     @NotBlank
@@ -86,9 +83,9 @@ public class Student {
 
     }
 
-    public Student(String name, String username, String email, String password) {
+    public Student(String name, /*String username,*/ String email, String password) {
         this.name = name;
-        this.username = username;
+//        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -109,13 +106,13 @@ public class Student {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 
     public String getEmail() {
         return email;
@@ -194,7 +191,7 @@ public class Student {
         return "Semester{" +
                 "studentId=" + studentId +
                 ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
+//                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", courses=" + studentsCourses +
                 '}';

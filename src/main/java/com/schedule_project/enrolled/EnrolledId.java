@@ -9,19 +9,19 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class EnrolledId implements Serializable {
 
-    @Column(name = "enrolled_student_id")
+    @Column(name = "enrolled_student_id", nullable = false)
     protected Long studentId;
 
-    @Column(name = "enrolled_group_num")
+    @Column(name = "enrolled_group_num", nullable = false)
     protected Integer groupNum;
 
-    @Column(name = "enrolled_group_location")
+    @Column(name = "enrolled_group_location", nullable = false)
     protected String groupLocation;
 
-    @Column(name = "enrolled_course_num")
+    @Column(name = "enrolled_course_num", nullable = false)
     protected Integer courseNum;
 
-    @Column(name = "enrolled_semester_name")
+    @Column(name = "enrolled_semester_name", nullable = false)
     protected String semesterName;
 
     public EnrolledId() {

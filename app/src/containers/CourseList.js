@@ -92,9 +92,10 @@ class CourseList extends Component {
 
         return (
 
-            <Loader loaded={this.state.loaded}>
+            //<Loader loaded={this.state.loaded}>
+
             <div>
-                <AppNavBar/>
+                {/*<AppNavBar/>*/}
                 <Container fluid>
                     <Row>
                         <Col md={3} xs={12}>
@@ -137,7 +138,7 @@ class CourseList extends Component {
                     </Row>
                 </Container>
             </div>
-            </Loader>
+            // </Loader>
         );
     }
 }

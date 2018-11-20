@@ -27,7 +27,6 @@ public class CourseGroup {
     @Column(name = "day")
     private String day;
 
-
     @Column(name = "course_group_instructor_id")
     private Integer instructorId;
 

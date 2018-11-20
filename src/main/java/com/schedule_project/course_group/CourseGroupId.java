@@ -9,16 +9,16 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class CourseGroupId implements Serializable {
 
-    @Column(name = "group_num")
+    @Column(name = "group_num", nullable = false)
     protected Integer groupNum;
 
-    @Column(name = "group_location")
+    @Column(name = "group_location", nullable = false)
     protected String groupLocation;
 
-    @Column(name = "course_group_course_num")
+    @Column(name = "course_group_course_num", nullable = false)
     protected Integer courseNum;
 
-    @Column(name = "course_group_semester_name")
+    @Column(name = "course_group_semester_name", nullable = false)
     protected String semesterName;
 
     public CourseGroupId() {

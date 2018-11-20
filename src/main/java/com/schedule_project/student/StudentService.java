@@ -2,6 +2,7 @@ package com.schedule_project.student;
 
 import com.schedule_project.enrolled.Enrolled;
 import com.schedule_project.exception.ResourceNotFoundException;
+import com.schedule_project.security.CurrentUser;
 import com.schedule_project.security.UserPrincipal;
 import com.schedule_project.studies.Studies;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -58,12 +58,12 @@ public class StudentService {
         studentRepository.deleteById(studentId);
     }
 
-    public Student getUserProfile(String username) {
-        return studentRepository.findByUsername(username)
-                                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-    }
+//    public Student getUserProfile(String username) {
+//        return studentRepository.findByUsername(username)
+//                                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+//    }
 
-    public Student getCurrentUser(UserPrincipal userPrincipal) {
+    public Student getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         return studentRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }

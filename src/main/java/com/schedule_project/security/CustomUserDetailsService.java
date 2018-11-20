@@ -1,5 +1,6 @@
 package com.schedule_project.security;
 
+import com.schedule_project.exception.ResourceNotFoundException;
 import com.schedule_project.student.Student;
 import com.schedule_project.student.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +18,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        // Let people login with either username or email
-        Student user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+        Student user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with username or email : " + usernameOrEmail)
+                        new UsernameNotFoundException("User not found with email : " + email)
                 );
 
         return UserPrincipal.create(user);
     }
 
-    // This method is used by JWTAuthenticationFilter
     @Transactional
     public UserDetails loadUserById(Long id) {
         Student user = userRepository.findById(id).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with id : " + id)
+                () -> new ResourceNotFoundException("User", "id", id)
         );
 
         return UserPrincipal.create(user);

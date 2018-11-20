@@ -9,12 +9,12 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="role_id")
+//    @Column(name="role_id")
     private Integer roleId;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
-    @Column(name="role", length = 60)
+//    @Column(name="role", length = 60)
     private RoleName name;
 
     public Role() {

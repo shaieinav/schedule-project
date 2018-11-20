@@ -38,18 +38,15 @@ public class HttpCookieOAuth2AuthorizationRequestRepository implements Authoriza
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {
         /*
             Ideally, the saved OAuth2AuthorizationRequest should be removed in this method.
-
             Since we're saving the OAuth2AuthorizationRequest in cookies, we need access to the HttpServletResponse to clear them.
             But that is not passed to this method.
-
             Therefore, We'll clear the cookies in OAuth2AuthenticationSuccessHandler instead.
         */
         return loadAuthorizationRequest(request);
     }
 
-    public OAuth2AuthorizationRequest /*static void*/ removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
+    public static void removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
         CookieUtils.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
         CookieUtils.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
-        return null;
     }
 }
