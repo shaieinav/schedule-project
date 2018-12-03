@@ -8,9 +8,24 @@ const searchComponent = (props) => {
         return {value: course.courseNum, label: course.courseName};
     });
 
+    // let groupOptions = props.selectedOption.map(group => {
+    //     return {
+    //         value: group,
+    //         label: (
+    //             `Course Number: ${group.courseGroupId.courseNum}, \n
+    //             Location: ${group.courseGroupId.groupLocation}, \n
+    //             Group Number: ${group.courseGroupId.groupNum}, \n
+    //             Day: ${group.day}, \n
+    //             Hours: ${group.hours}, \n
+    //             Semester: ${group.courseGroupId.semesterName}, \n
+    //             Teaching Type: ${group.teachingType}\n`
+    //         )
+    //     }
+    // });
+
     let groupOptions = props.selectedOption.map(group => {
         return {
-            value: group.courseGroupId,
+            value: group,
             label: (
                 `Course Number: ${group.courseGroupId.courseNum}, \n
                 Location: ${group.courseGroupId.groupLocation}, \n 
@@ -34,11 +49,11 @@ const searchComponent = (props) => {
 
     let groupPlaceholder;
 
-    function handleChosenGroup(key) {
-        console.log('chosen group:\n' + key.courseNum);
+    function handleChosenGroup(key, data) {
+        console.log('chosen group:\n' + data.courseName);
         groupPlaceholder =  key;
         let temp = props.selectedOption.filter(option => {
-                    return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key).toString())
+                    return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key.courseGroupId).toString())
                 })
         groupPlaceholder = temp;
     }
@@ -63,11 +78,11 @@ const searchComponent = (props) => {
                             options={groupOptions}
                             placeholder={placeholder}
                             isDisabled={disabled}
-                            onChange={(chosenGroup) => handleChosenGroup(chosenGroup.value)}
+                            onChange={(chosenGroup) => handleChosenGroup(chosenGroup.value, props.chosenCourseData)}
                         />
                     </FormGroup>
                     <Button color="danger" active onClick={(event) => {
-                        props.handleAddingCourseToCalendar(event, groupPlaceholder);
+                        props.handleAddingCourseToCalendar(event, groupPlaceholder, props.chosenCourseData);
                     }}>Add Course</Button>
                 </Form>
             </Container>

@@ -24,13 +24,14 @@ class CalendarComponent extends Component {
                 defaultDate: moment('2018-04-01'),
                 columnFormat: 'ddd',
             },
+            courseName: 'temp',
             eventsA: [],
             eventsB: [],
             eventsC: [],
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) {
 
         if (JSON.stringify(this.props) === JSON.stringify(nextProps)) {
             return false;
@@ -42,6 +43,11 @@ class CalendarComponent extends Component {
             '#D7CCC8', '#F5F5F5', '#CFD8DC'];
         const color = colors[Math.floor(Math.random() * colors.length)];
 
+        let name = '';
+        await fetch(`http://localhost:8080/api/courses/${this.props.courseObject[0].courseGroupId.courseNum}`)
+            .then(response => response.json())
+            .then(data => name = data.courseName);
+
         let day, time, event, updatedEvents;
         let determineDay = function (day) {
             if (day === "א") return '2018-04-01';
@@ -51,10 +57,13 @@ class CalendarComponent extends Component {
             else if (day === "ה") return '2018-04-05';
             else if (day === "ו") return '2018-04-06';
         };
+        console.log("course object", this.props.courseObject);
+        console.log("course data name", this.state.courseName);
         day = determineDay(this.props.courseObject[0].day);
         time = this.props.courseObject[0].hours.split(['-']);
         event = {
-            title: `${this.props.courseObject[0].courseGroupId.courseNum}
+            title: `${name}
+                    ${this.props.courseObject[0].courseGroupId.courseNum}
                     ${this.props.courseObject[0].courseGroupId.groupLocation}`,
             start: `${day}T${time[1]}`,
             end: `${day}T${time[0]}`,

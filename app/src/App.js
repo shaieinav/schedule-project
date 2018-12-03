@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AppHeader from './common/AppHeader';
 import Login from './user/login/Login';
 import Signup from './user/signup/Signup';
 import Profile from './user/profile/Profile';
@@ -25,7 +24,8 @@ class App extends Component {
         this.state = {
             authenticated: false,
             currentUser: null,
-            loading: false
+            loading: true,
+            studentId: -1,
         };
 
         this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
@@ -44,8 +44,12 @@ class App extends Component {
                 this.setState({
                     currentUser: response,
                     authenticated: true,
-                    loading: false
+                    loading: false,
+                    studentId: response.studentId,
                 });
+                console.log('current user:', this.state.currentUser);
+                console.log('user authenticated:', this.state.authenticated);
+                console.log('user studentId:', this.state.studentId);
             }).catch(error => {
             this.setState({
                 loading: false
@@ -77,13 +81,10 @@ class App extends Component {
             return <LoadingIndicator />
         }
 
-        return (
+        const {studentId} = this.state;
+        console.log('authenticated in render:', this.state.authenticated);
 
-            //{/*<Router>*/}
-            //    {/*<Switch>*/}
-            //        {/*<Route path='/' exact={true} component={CourseList}/>*/}
-            //    {/*</Switch>*/}
-            //{/*</Router>*/}
+        return (
 
         <div className="app">
             <div className="app-top-box">
@@ -92,7 +93,7 @@ class App extends Component {
             </div>
             <div className="app-body">
                 <Switch>
-                    <Route exact path="/" component={CourseList}></Route>
+                    <Route exact path="/" authenticated={this.state.authenticated} studentId={studentId} currentUser={this.state.currentUser} component={CourseList}></Route>
                     <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                                   component={Profile}></PrivateRoute>
                     <Route path="/login"

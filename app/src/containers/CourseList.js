@@ -6,9 +6,30 @@ import AppNavBar from './AppNavBar';
 import Loader from 'react-loader';
 import SearchComponent from '../components/SearchComponent';
 import CalendarComponent from '../components/CalendarComponent';
+import { getCurrentUser } from '../util/APIUtils';
 import '../App.css';
+import LoadingIndicator from "../common/LoadingIndicator";
 
 class CourseList extends Component {
+
+    emptyEnrollmentItem = {
+        enrolledId: {
+            studentId: 0,
+            groupNum: 0,
+            groupLocation: '',
+            courseNum: 0,
+            semesterName: ''
+        }
+    };
+
+    emptyStudiesItem = {
+        studiesId: {
+            studentId: 0,
+            courseNum: 0
+        },
+        studyDay: '',
+        studyTime: ''
+    };
 
     constructor(props) {
 
@@ -23,18 +44,27 @@ class CourseList extends Component {
             chosenCourseData: [],
             activeTab: 1,
             loaded: false,
+            //
+            enrollmentItem: this.emptyEnrollmentItem,
+            studiesItem: this.emptyStudiesItem,
+            studentId: 0,
+            isAuthenticated: false,
+            loading: false,
         };
 
         this.handleTabSelect = this.handleTabSelect.bind(this);
+        this.handleAddingCourseToCalendar = this.handleAddingCourseToCalendar.bind(this);
+        // this.getCourseName = this.getCourseName.bind(this);
     }
 
     componentDidMount() {
-        fetch('api/courses')
+        fetch('http://localhost:8080/api/courses')
             .then(response => response.json())
             .then(data => this.setState({
                 coursesList: data,
-                loaded: true
-            }));
+                loaded: true,
+        }));
+
     }
 
     updateQuery = (query) => {
@@ -45,7 +75,7 @@ class CourseList extends Component {
 
     handleChosenCourse = (courseNum) => {
         let updatedChosenCourse, updatedCourseName, updatedChosenCourseData;
-        fetch(`api/courses/${courseNum.value}`)
+        fetch(`http://localhost:8080/api/courses/${courseNum.value}`)
             .then(response => response.json())
             .then(data => {
                     updatedChosenCourse = data.courseGroups;
@@ -66,22 +96,98 @@ class CourseList extends Component {
             )
     };
 
-    handleAddingCourseToCalendar = (event, courseGroupObj) => {
+    async handleAddingCourseToCalendar(event, courseGroupObj, courseData) {
         event.preventDefault();
+
         this.setState({
             courseGroupObject: courseGroupObj,
             query: '',
-        })
-        console.log('course object:\n' + this.state.courseName)
+            chosenCourseData: courseData,
+        });
+        console.log('course info:\n' + this.state.courseName);
+        console.log('course data:\n' + courseData.courseName);
+        console.log('course group object:\n' + courseGroupObj[0].groupNum);
+
+        //
+        await getCurrentUser()
+            .then(response => {
+                this.setState({
+                    isAuthenticated: true,
+                    loading: false,
+                    studentId: response.studentId,
+                });
+                console.log('user authenticated in CourseList:', this.state.isAuthenticated);
+                console.log('user studentId in CourseList:', this.state.studentId);
+
+                //
+                let enrollmentItem = {...this.state.enrollmentItem};
+                console.log("enrollment item:", enrollmentItem);
+                console.log("current user is authenticated:", this.state.isAuthenticated);
+                console.log("current user id:", this.state.studentId);
+                enrollmentItem.enrolledId.studentId = this.state.studentId;
+                enrollmentItem.enrolledId.groupNum = courseGroupObj[0].courseGroupId.groupNum;
+                enrollmentItem.enrolledId.groupLocation = courseGroupObj[0].courseGroupId.groupLocation;
+                enrollmentItem.enrolledId.courseNum = courseGroupObj[0].courseGroupId.courseNum;
+                enrollmentItem.enrolledId.semesterName = courseGroupObj[0].courseGroupId.semesterName;
+                console.log("updated enrollment item:",  enrollmentItem);
+                this.setState({enrollmentItem});
+                console.log("updated enrollment item to POST:",  this.state.enrollmentItem);
+                //
+                let studiesItem = {...this.state.studiesItem};
+                console.log("studies item:", studiesItem);
+                studiesItem.studiesId.studentId = this.state.studentId;
+                studiesItem.studiesId.courseNum = courseGroupObj[0].courseGroupId.courseNum;
+                studiesItem.studyDay = courseGroupObj[0].day;
+                studiesItem.studyTime = courseGroupObj[0].hours;
+                console.log("updated study item:",  studiesItem);
+                this.setState({studiesItem});
+                console.log("updated studies item to POST:",  this.state.studiesItem);
+            }).catch(error => {
+                console.log('Error in CourseList -> handleAddingCourseToCalendar -> getCurrentUser');
+                this.setState({
+                    loading: false
+                });
+        });
+
+        //
+        await fetch('http://localhost:8080/enrolled', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.enrollmentItem),
+        });
+
+        await fetch('http://localhost:8080/studies', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.studiesItem),
+        });
     };
 
     handleTabSelect(activeTab) {
         this.setState({ activeTab });
     }
 
+    getCourseName = (name) => {
+        // console.log("in getCourseName. course name is:", this.state.courseName);
+        return this.state.courseName;
+    };
+
     render() {
 
+        if(this.state.loading) {
+            return <LoadingIndicator />
+        }
+
         const {coursesList, query, selectedOption, courseGroupObject, chosenCourseData} = this.state;
+
+        console.log("used chosenCourseData in render");
+        console.log("user authenticated in CourseList render:", this.props.authenticated);
 
         const filteredCourses =
             query === ''
@@ -92,7 +198,7 @@ class CourseList extends Component {
 
         return (
 
-            //<Loader loaded={this.state.loaded}>
+            <Loader loaded={this.state.loaded}>
 
             <div>
                 {/*<AppNavBar/>*/}
@@ -119,18 +225,21 @@ class CourseList extends Component {
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '1'
+                                        courseName={this.getCourseName}
                                     />
                                 </Tab>
                                 <Tab eventKey={2} title="סמסטר ב">
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '2'
+                                        courseName={this.getCourseName}
                                     />
                                 </Tab>
                                 <Tab eventKey={3} title="סמסטר ג">
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '3'
+                                        courseName={this.getCourseName}
                                     />
                                 </Tab>
                             </Tabs>
@@ -138,7 +247,7 @@ class CourseList extends Component {
                     </Row>
                 </Container>
             </div>
-            // </Loader>
+            </Loader>
         );
     }
 }

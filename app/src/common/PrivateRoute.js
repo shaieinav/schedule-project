@@ -6,6 +6,7 @@ import {
 
 
 const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
+
     <Route
         {...rest}
         render={props =>

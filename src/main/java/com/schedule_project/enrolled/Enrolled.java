@@ -57,18 +57,28 @@ public class Enrolled implements Serializable {
     }
 
     @Transient
-    public Long getStudent() {
-        return student.getStudentId();
+    public /*Long*/ Student getStudent() {
+        return student/*.getStudentId()*/;
     }
+
+//    @Transient
+//    public Student getTheStudent() {
+//        return student;
+//    }
 
     public void setStudent(Student student) {
         this.student = student;
     }
 
     @Transient
-    public Integer getCourseGroup() {
-        return courseGroup.getCourseGroupId().getGroupNum();
+    public /*Integer*/ CourseGroup getCourseGroup() {
+        return courseGroup/*.getCourseGroupId().getGroupNum()*/;
     }
+
+//    @Transient
+//    public CourseGroup getTheCourseGroup() {
+//        return courseGroup;
+//    }
 
     public void setCourseGroup(CourseGroup courseGroup) {
         this.courseGroup = courseGroup;
