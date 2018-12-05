@@ -37,6 +37,7 @@ class CourseList extends Component {
 
         this.state = {
             coursesList: [],
+            semesterData: [],
             query: '',
             selectedOption: [],
             courseGroupObject: [],
@@ -50,21 +51,46 @@ class CourseList extends Component {
             studentId: 0,
             isAuthenticated: false,
             loading: false,
+            currentUserCourses: {}
         };
 
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleAddingCourseToCalendar = this.handleAddingCourseToCalendar.bind(this);
-        // this.getCourseName = this.getCourseName.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         fetch('http://localhost:8080/api/courses')
             .then(response => response.json())
             .then(data => this.setState({
                 coursesList: data,
                 loaded: true,
         }));
-
+        fetch('http://localhost:8080/semesters')
+            .then(response => response.json())
+            .then(semesterData => this.setState({
+                semesterData: semesterData,
+                loaded: true,
+        }));
+        await getCurrentUser()
+            .then(response => {
+                this.setState({
+                    isAuthenticated: true,
+                    loading: false,
+                    studentId: response.studentId,
+                });
+            })
+            .catch(error => {
+                console.log('Error in CourseList -> handleAddingCourseToCalendar -> getCurrentUser');
+                this.setState({
+                    loading: false
+                });
+            });
+        await fetch(`http://localhost:8080/enrolled/${this.state.studentId}`)
+            .then(response => response.json())
+            .then(userCoursesData => this.setState({
+                currentUserCourses: userCoursesData,
+        }));
+        console.log("user with student id = " + this.state.studentId + " has the following courses:\n" + this.state.currentUserCourses);
     }
 
     updateQuery = (query) => {
@@ -173,18 +199,14 @@ class CourseList extends Component {
         this.setState({ activeTab });
     }
 
-    getCourseName = (name) => {
-        // console.log("in getCourseName. course name is:", this.state.courseName);
-        return this.state.courseName;
-    };
-
     render() {
 
         if(this.state.loading) {
             return <LoadingIndicator />
         }
 
-        const {coursesList, query, selectedOption, courseGroupObject, chosenCourseData} = this.state;
+        const {coursesList, query, selectedOption, courseGroupObject, chosenCourseData, semesterData,
+            currentUserCourses, studentId} = this.state;
 
         console.log("used chosenCourseData in render");
         console.log("user authenticated in CourseList render:", this.props.authenticated);
@@ -201,7 +223,6 @@ class CourseList extends Component {
             <Loader loaded={this.state.loaded}>
 
             <div>
-                {/*<AppNavBar/>*/}
                 <Container fluid>
                     <Row>
                         <Col md={3} xs={12}>
@@ -209,6 +230,7 @@ class CourseList extends Component {
                                 query={query}
                                 selectedOption={selectedOption}
                                 chosenCourseData={chosenCourseData}
+                                semesterData={semesterData}
                                 filteredCourses={filteredCourses}
                                 updateQuery={this.updateQuery}
                                 handleChosenCourse={this.handleChosenCourse}
@@ -225,21 +247,27 @@ class CourseList extends Component {
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '1'
-                                        courseName={this.getCourseName}
+                                        currentUserCourses={currentUserCourses}
+                                        studentId={studentId}
+                                        // coursesList={coursesList}
                                     />
                                 </Tab>
                                 <Tab eventKey={2} title="סמסטר ב">
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '2'
-                                        courseName={this.getCourseName}
+                                        currentUserCourses={currentUserCourses}
+                                        studentId={studentId}
+                                        // coursesList={coursesList}
                                     />
                                 </Tab>
                                 <Tab eventKey={3} title="סמסטר ג">
                                     <CalendarComponent
                                         courseObject={courseGroupObject}
                                         activeTabIndex= '3'
-                                        courseName={this.getCourseName}
+                                        currentUserCourses={currentUserCourses}
+                                        studentId={studentId}
+                                        // coursesList={coursesList}
                                     />
                                 </Tab>
                             </Tabs>

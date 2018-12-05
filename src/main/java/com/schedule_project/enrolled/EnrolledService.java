@@ -32,6 +32,11 @@ public class EnrolledService {
                 .orElseThrow(() -> new Exception("Can't find enrolled id"));
     }
 
+    public List<Enrolled> getEnrollsByStudentId(Long studentId) {
+        log.info("Request to get all enrollments by id");
+        return enrolledRepository.findByEnrolledIdStudentId(studentId);
+    }
+
     public void addEnrollment(Enrolled enrolled) {
         log.info("Request to create enrollment: {}", enrolled);
         enrolledRepository.save(enrolled);

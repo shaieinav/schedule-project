@@ -25,6 +25,11 @@ public class StudiesController {
         return studiesService.getStudies(studiesId);
     }
 
+    @GetMapping("/studies/{studentId}")
+    public List<Studies> getStudiesByStudentId(@PathVariable Long studentId) {
+        return studiesService.getStudiesByStudentId(studentId);
+    }
+
     @PostMapping("/studies")
     public void addStudies(@RequestBody Studies studies) {
         studiesService.addStudies(studies);

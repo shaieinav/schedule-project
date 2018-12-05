@@ -31,6 +31,11 @@ public class EnrolledController {
         return enrolledService.getEnrollment(enrolledId);
     }
 
+    @GetMapping("/enrolled/{studentId}")
+    public List<Enrolled> getEnrollsByStudentId(@PathVariable Long studentId) {
+        return enrolledService.getEnrollsByStudentId(studentId);
+    }
+
     @PostMapping("/enrolled")
     public void addEnrollment(@RequestBody Enrolled enrolled) {
         enrolledService.addEnrollment(enrolled);

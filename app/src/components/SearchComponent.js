@@ -8,20 +8,9 @@ const searchComponent = (props) => {
         return {value: course.courseNum, label: course.courseName};
     });
 
-    // let groupOptions = props.selectedOption.map(group => {
-    //     return {
-    //         value: group,
-    //         label: (
-    //             `Course Number: ${group.courseGroupId.courseNum}, \n
-    //             Location: ${group.courseGroupId.groupLocation}, \n
-    //             Group Number: ${group.courseGroupId.groupNum}, \n
-    //             Day: ${group.day}, \n
-    //             Hours: ${group.hours}, \n
-    //             Semester: ${group.courseGroupId.semesterName}, \n
-    //             Teaching Type: ${group.teachingType}\n`
-    //         )
-    //     }
-    // });
+    const semesterOptions = props.semesterData.map(semester => {
+        return {value: semester.semesterName, label: semester.semesterName};
+    });
 
     let groupOptions = props.selectedOption.map(group => {
         return {
@@ -54,8 +43,15 @@ const searchComponent = (props) => {
         groupPlaceholder =  key;
         let temp = props.selectedOption.filter(option => {
                     return (JSON.stringify(option.courseGroupId).toString() === JSON.stringify(key.courseGroupId).toString())
-                })
+                });
         groupPlaceholder = temp;
+    }
+
+    function handleSemesterFilter(semester) {
+        console.log("semester:", semester);
+        groupOptions = groupOptions.filter((group) => (
+            group.courseGroupId.semesterName === semester)
+        );
     }
 
     return (
@@ -84,6 +80,14 @@ const searchComponent = (props) => {
                     <Button color="danger" active onClick={(event) => {
                         props.handleAddingCourseToCalendar(event, groupPlaceholder, props.chosenCourseData);
                     }}>Add Course</Button>
+                    <FormGroup>
+                        <Label>Filter</Label>
+                        <Select
+                            options={semesterOptions}
+                            placeholder={'Filter by semester'}
+                            onChange={(chosenSemester) => handleSemesterFilter(chosenSemester.value)}
+                        />
+                    </FormGroup>
                 </Form>
             </Container>
         </div>

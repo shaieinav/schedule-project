@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import FullCalendar from 'fullcalendar-reactwrapper';
 import 'fullcalendar-reactwrapper/dist/css/fullcalendar.min.css';
 import moment from 'moment';
+import {getCurrentUser} from "../util/APIUtils";
+import LoadingIndicator from "../common/LoadingIndicator";
 
 class CalendarComponent extends Component {
 
@@ -24,11 +26,133 @@ class CalendarComponent extends Component {
                 defaultDate: moment('2018-04-01'),
                 columnFormat: 'ddd',
             },
-            courseName: 'temp',
+            // courseName: 'temp',
+            currentUserStudies: {},
+            studentId: 0,
             eventsA: [],
             eventsB: [],
             eventsC: [],
+            // loading: true,
+            allCourses: {},
         };
+
+        // this.getCourseName = this.getCourseName.bind(this);
+    }
+
+    // async getCourseName(courseNum) {
+    //     await fetch(`http://localhost:8080/api/courses/${courseNum}`)
+    //         .then(response => response.json())
+    //         .then(data => this.setState({courseName: data.courseName}))
+    //         .catch(error => {
+    //             console.log('Error in determineCourseName');
+    //         });
+    // }
+
+    async componentDidMount() {
+
+        let updatedEventsA = [...this.state.eventsA], updatedEventsB = [...this.state.eventsB], updatedEventsC = [...this.state.eventsC];
+
+        await getCurrentUser()
+            .then(response => {
+                this.setState({
+                    studentId: response.studentId,
+                });
+            })
+            .catch(error => {
+                console.log('Error in componentDidMount while getting user information');
+            });
+
+        await fetch(`http://localhost:8080/studies/${this.state.studentId}`)
+            .then(response => response.json())
+            .then(userStudiesData => this.setState({
+                currentUserStudies: userStudiesData,
+            }))
+            .catch(error => {
+                console.log('Error in componentDidMount while getting user studies information');
+            });
+
+        await fetch(`http://localhost:8080/api/courses`)
+            .then(response => response.json())
+            .then(courseData => this.setState({
+                allCourses: courseData,
+            }))
+            .catch(error => {
+                console.log('Error in componentDidMount while getting courses');
+            });
+
+        const userCourses = this.props.currentUserCourses.map(course => {
+
+            // fetch(`http://localhost:8080/api/courses/${course.enrolledId.courseNum}`)
+            //     .then(response => response.json())
+            //     .then(data => this.setState({
+            //         courseName: data.courseName,
+            //         loading: false
+            //     }))
+            //     .catch(error => {
+            //         console.log('Error in componentDidMount:', error);
+            //     });
+
+            let name = this.state.allCourses.filter(courseOption => {
+                return (JSON.stringify(courseOption.courseNum).toString() === JSON.stringify(course.enrolledId.courseNum).toString())
+            });
+
+            const colors = ['#FF8A80', '#FF80AB', '#EA80FC', '#B388FF', '#8C9EFF', '#82B1FF', '#80D8FF', '#84FFFF',
+                '#A7FFEB', '#B9F6CA', '#CCFF90', '#F4FF81', '#FFFF8D', '#FFE57F', '#FFD180', '#FF9E80'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            let day, time, event;
+
+            // this.getCourseName(course.enrolledId.courseNum);
+
+            let studies = this.state.currentUserStudies.filter(studies => {
+                return (JSON.stringify(studies.studiesId.courseNum).toString() === JSON.stringify(course.enrolledId.courseNum).toString())
+            });
+
+            console.log("studies:", studies);
+
+            let determineDay = function (day) {
+                if (day === "א") return '2018-04-01';
+                else if (day === "ב") return '2018-04-02';
+                else if (day === "ג") return '2018-04-03';
+                else if (day === "ד") return '2018-04-04';
+                else if (day === "ה") return '2018-04-05';
+                else if (day === "ו") return '2018-04-06';
+            };
+
+            // name = determineCourseName();
+
+            day = determineDay(studies[0].studyDay);
+            console.log("study day: " + studies[0].studyDay + ", determined day: " + day);
+            time = studies[0].studyTime.split(['-']);
+            // name = determineCourseName();
+            console.log("course name in calendar", name);
+            event = {
+                title: `${name[0].courseName}
+                ${course.enrolledId.courseNum}
+                ${course.enrolledId.groupLocation}`,
+                start: `${day}T${time[1]}`,
+                end: `${day}T${time[0]}`,
+                color: color,
+
+            };
+
+            // check the semester to decide if the event should be in semester A tab
+            if(course.enrolledId.semesterName.indexOf('א') > -1) {
+                updatedEventsA.push(event);
+                this.setState({eventsA: updatedEventsA});
+            }
+            // check the semester to decide if the event should be in semester B tab
+            else if(course.enrolledId.semesterName.indexOf('ב') > -1) {
+                updatedEventsB.push(event);
+                this.setState({eventsB: updatedEventsB});
+                console.log("Semester B Events:", this.state.eventsB);
+            }
+            // check the semester to decide if the event should be in semester C tab
+            else if(course.enrolledId.semesterName.indexOf('ג') > -1) {
+                updatedEventsC.push(event);
+                this.setState({eventsC: updatedEventsC});
+            }
+        });
     }
 
     async componentWillReceiveProps(nextProps) {
@@ -39,8 +163,7 @@ class CalendarComponent extends Component {
         this.props = nextProps;
 
         const colors = ['#FF8A80', '#FF80AB', '#EA80FC', '#B388FF', '#8C9EFF', '#82B1FF', '#80D8FF', '#84FFFF',
-            '#A7FFEB', '#B9F6CA', '#CCFF90', '#F4FF81', '#FFFF8D', '#FFE57F', '#FFD180', '#FF9E80',
-            '#D7CCC8', '#F5F5F5', '#CFD8DC'];
+            '#A7FFEB', '#B9F6CA', '#CCFF90', '#F4FF81', '#FFFF8D', '#FFE57F', '#FFD180', '#FF9E80'];
         const color = colors[Math.floor(Math.random() * colors.length)];
 
         let name = '';
@@ -68,7 +191,6 @@ class CalendarComponent extends Component {
             start: `${day}T${time[1]}`,
             end: `${day}T${time[0]}`,
             color: color,
-
         };
 
         console.log(this.props.courseObject[0].courseGroupId.semesterName);

@@ -24,6 +24,11 @@ public class StudiesService {
                 .orElseThrow(() -> new Exception("Can't find studies id"));
     }
 
+    public List<Studies> getStudiesByStudentId(Long studentId) {
+        log.info("Request to get all studies by id");
+        return studiesRepository.findByStudiesIdStudentId(studentId);
+    }
+
     public void addStudies(Studies studies) {
         log.info("Request to create studies: {}", studies);
         studiesRepository.save(studies);
